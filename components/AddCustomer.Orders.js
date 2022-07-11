@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { addData } from "../services/firebase.service"
+import { addData } from "../src/firebase.service"
 import { useOutletContext } from "react-router-dom"
 import { ReactComponent as UserAddIcon } from "./icons/user-add.svg"
 import Input from "./Input"
