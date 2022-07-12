@@ -2,12 +2,18 @@ import Link from "next/link";
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="bg-black">
-      <Link href="/orders">ORDERS<button>asdasdasd</button></Link>
-      <Link href="/dashboard">DASHBOARD</Link>
-      <Link href="/planner">PLANNER</Link>
-      <Link href="/todo" />
-    </div>
+    <nav className="bg-black">
+      <p>HELLLLOOOOOOOO</p>
+      <Link href="/">
+        <a>Home</a>
+      </Link>
+      <Link href="/about">
+        <a>About</a>
+      </Link>
+      <Link href="/contact">
+        <a>Contact</a>
+      </Link>
+    </nav>
   );
 };
 
