@@ -9,4 +9,4 @@ const Orders: NextPage = () => {
   )
 }
 
-export default withAuthUser(Orders)
+export default Orders
