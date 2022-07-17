@@ -1,4 +1,3 @@
-import React from "react";
 import ReactExport from "react-export-excel";
 
 const ExcelFile = ReactExport.ExcelFile;

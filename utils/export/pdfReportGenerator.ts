@@ -2,14 +2,14 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 
 // define a generatePDF function that accepts a data argument
-const generatePDF = (data) => {
+const generatePDF = (data: object[]) => {
   // initialize jsPDF
   const doc = new jsPDF();
-  const tableRows = [];
+  const tableRows: object[] = [];
 
   // for each data item pass all its data into an array
   data.forEach(item => {
-    const tableData = [
+    const tableData= [
       item.date,
       item.customer,
       item.orderNum,

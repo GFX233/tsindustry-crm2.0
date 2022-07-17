@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { getFirestore, collection, addDoc, getDocs, query, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore"
-const apiKey = process.env.REACT_APP_API_KEY
+const apiKey = process.env.FIREBASE_PRIVATE_KEY
 
 const firebaseConfig = {
     apiKey: apiKey,
@@ -14,14 +13,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-console.log(apiKey)
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp)
 
-export const auth = getAuth(firebaseApp);
-
-
-export const addData = async (where, body) => {
+export const addData = async (where: string, body: object) => {
     try {
         const docRef = await addDoc(collection(db, where), body)
         console.log("Document added with ID: ", docRef.id)
@@ -31,19 +26,19 @@ export const addData = async (where, body) => {
     }
 }
 
-export const editData = async (where, id, data) => {
+export const editData = async (where: string, id: string, data: object) => {
     const docRef = await setDoc(doc(db, where, id), data)
     console.log("Document with id: ", id, " edited!")
     return docRef
 }
 
-export const getInfo = async (from, id) => {
+export const getInfo = async (from: string, id: string) => {
     const docData = await getDoc(doc(db, from, id))
     return docData.data()
 }
 
 
-export const deleteItem = async (id) => {
+export const deleteItem = async (id: string) => {
     try {
         const docDel = await deleteDoc(doc(db, "orders", id))
         return docDel
@@ -54,7 +49,7 @@ export const deleteItem = async (id) => {
 
 export const getOrders = async () => {
     const dataQuery = await getDocs(query(collection(db, "orders")))
-    const data = []
+    const data: object[] = []
     dataQuery.docs.forEach(doc => {
         data.push({ ...doc.data(), id: doc.id })
     })
@@ -63,18 +58,11 @@ export const getOrders = async () => {
 
 export const getCustomers = async () => {
     const dataQuery = await getDocs(query(collection(db, "customers")))
-    const data = []
+    const data: object[] = []
     dataQuery.docs.forEach(doc => data.push(doc.data()))
     return data
 }
 
-export const login = async (auth, email, password) => {
-    try {
-        const user = await signInWithEmailAndPassword(auth, email, password)
-        console.log(user)
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+
 
 
