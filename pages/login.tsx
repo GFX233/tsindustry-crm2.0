@@ -1,20 +1,23 @@
-import {useState} from "react"
-import logo from "../logo/print_transparent.svg"
-//import Message from "./Message"
-//import { auth } from "../services/firebase.service"
-//import { signInWithEmailAndPassword } from "firebase/auth"
+import React, {Dispatch, SetStateAction, useState} from "react"
+import Image from "next/image"
+import { auth, signIn } from "../utils/firebase/firebase-auth"
+import Message from "../components/message"
 
-const Login = ({setIsLoggedIn}) => {
+interface LoginProps {
+    setUser: Dispatch<SetStateAction<boolean>>
+}
+
+const Login = ({setUser}: LoginProps) => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [failed, setFailed] = useState(false)
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
         try {
-            const user = await signInWithEmailAndPassword(auth, username, password)
+            const user = await signIn(username, password)
             console.log(user)
-            setIsLoggedIn(true)
+            setUser(true)
         } catch (error) {
             setFailed(true)
             setTimeout(() => {
@@ -27,10 +30,10 @@ const Login = ({setIsLoggedIn}) => {
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                <img className="mx-auto h-40 w-auto" src={logo} alt="TS INDUSTRY"/>
+                <Image className="rounded" src="/ts.svg" width={50} height={50}/>
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Please sign in to your account</h2>
                 </div>
-                <form  onSubmit={handleSubmit} className="mt-8 space-y-6">
+                <form onSubmit={handleSubmit} className="mt-8 space-y-6">
                 <div className="rounded-md shadow-sm -space-y-px">
                     <input value={username} onChange={(e) => setUsername(e.target.value)} id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
                     <input value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>

@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-import { ErrorProps } from "next/error";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
 const apiKey = process.env.FIREBASE_PRIVATE_KEY
 
 const firebaseConfig = {
