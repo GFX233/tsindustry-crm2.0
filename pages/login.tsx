@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useState} from "react"
 import Image from "next/image"
-import { auth, signIn } from "../utils/firebase/firebase-auth"
+import { signIn } from "../utils/firebase/firebase-auth"
 import Message from "../components/message"
 
 interface LoginProps {

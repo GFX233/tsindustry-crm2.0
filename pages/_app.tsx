@@ -5,9 +5,6 @@ import initAuth from "../utils/initAuth"
 import React, { useState } from "react";
 import Login from "./login";
 
-initAuth()
-
-
 const App = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = useState<boolean>(false)
 
