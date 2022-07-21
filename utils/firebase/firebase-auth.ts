@@ -1,20 +1,9 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
-const apiKey = process.env.FIREBASE_PRIVATE_KEY
-
-const firebaseConfig = {
-    apiKey: apiKey,
-    authDomain: "tsi-crm-c3502.firebaseapp.com",
-    projectId: "tsi-crm-c3502",
-    storageBucket: "tsi-crm-c3502.appspot.com",
-    messagingSenderId: "135743100693",
-    appId: "1:135743100693:web:1cabbf515629ce9c503b1c",
-    measurementId: "G-LLYDXNS7VB"
-};
+import "firebase/auth"
+import firebaseApp from "./firebase";
+import firebase from 'firebase/app'
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-export const auth = getAuth(firebaseApp);
+export const auth = firebase.auth.getAuth(firebaseApp);
 
 export const signIn = async (email: string, password: string) => {
   try {

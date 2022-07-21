@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction, useState} from "react"
 import Image from "next/image"
-import { signIn } from "../utils/firebase/firebase-auth"
+//import { signIn } from "../utils/firebase/firebase-auth"
 import Message from "../components/message"
 
 interface LoginProps {
@@ -15,8 +15,8 @@ const Login = ({setUser}: LoginProps) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         try {
-            const user = await signIn(username, password)
-            console.log(user)
+            //const user = await signIn(username, password)
+            //console.log(user)
             setUser(true)
         } catch (error) {
             setFailed(true)

@@ -1,19 +1,8 @@
-import { initializeApp } from "firebase/app";
+import firebaseApp from "./firebase";
 import { getFirestore, collection, addDoc, getDocs, query, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore"
-const apiKey = process.env.FIREBASE_PRIVATE_KEY
 
-const firebaseConfig = {
-    apiKey: apiKey,
-    authDomain: "tsi-crm-c3502.firebaseapp.com",
-    projectId: "tsi-crm-c3502",
-    storageBucket: "tsi-crm-c3502.appspot.com",
-    messagingSenderId: "135743100693",
-    appId: "1:135743100693:web:1cabbf515629ce9c503b1c",
-    measurementId: "G-LLYDXNS7VB"
-};
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp)
 
 export const addData = async (where: string, body: object) => {

@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import {withAuthUser} from 'next-firebase-auth'
 
-const Orders: NextPage = () => {
+const Orders: React.FC = () => {
   return (
     <div>
       <p>Orders</p>
@@ -9,4 +9,4 @@ const Orders: NextPage = () => {
   )
 }
 
-export default Orders
+export default withAuthUser()(Orders)
