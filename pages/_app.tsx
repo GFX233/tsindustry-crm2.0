@@ -7,7 +7,11 @@ import Login from "./login";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = useState<boolean>(false)
-  initAuth()
+  console.log(user)
+  if (!user) {
+    return <Login setUser={setUser}/>
+  }
+  
   return (
     <Layout>
       <Component {...pageProps} />

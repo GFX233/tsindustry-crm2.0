@@ -1,4 +1,4 @@
-import Firebase from "firebase/app";
+import { initializeApp } from "firebase/app";
 
 process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY
 
@@ -11,8 +11,6 @@ const firebaseConfig = {
     appId: "1:135743100693:web:1cabbf515629ce9c503b1c",
     measurementId: "G-LLYDXNS7VB"
 };
-
-const firebaseApp = Firebase.initializeApp(firebaseConfig)
-
+const firebaseApp = initializeApp(firebaseConfig)
 
 export default firebaseApp

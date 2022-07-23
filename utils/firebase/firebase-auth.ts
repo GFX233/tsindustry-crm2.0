@@ -1,17 +1,17 @@
-import "firebase/auth"
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth"
 import firebaseApp from "./firebase";
-import firebase from 'firebase/app'
+import firebase from "firebase/app"
 
 // Initialize Firebase
-export const auth = firebase.auth.getAuth(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
 export const signIn = async (email: string, password: string) => {
   try {
-      const user = await signInWithEmailAndPassword(auth, email, password)
-      console.log(user)
+    await signInWithEmailAndPassword(auth, email, password)
   } catch (error) {
-      console.log((error as Error).message)
-  }
+    console.error(error)
+      }
+  
 }
 
 export const signOut = async () => {
