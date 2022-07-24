@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { signOut } from "../utils/firebase/firebase-auth"
 
 interface AvatarProps{
   src?: string,
@@ -17,7 +18,7 @@ const Avatar = ({src, alt, name, email}: AvatarProps): JSX.Element => {
         width={45} 
         height={45}/>
       <div className="space-y-1 font-medium dark:text-white">
-          <div>{name ? name : "Tomáš Spáčil"}</div>
+          <button onClick={signOut}><div>{name ? name : "Tomáš Spáčil"}</div></button>
           <div className="text-sm text-gray-500 dark:text-gray-400">{email ? email : "tomas.spacil@tsindustry.cz"}</div>
       </div>
     </div>

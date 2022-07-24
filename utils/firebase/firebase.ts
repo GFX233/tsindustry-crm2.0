@@ -1,6 +1,5 @@
-import { initializeApp } from "firebase/app";
-
-process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY,
@@ -11,6 +10,7 @@ const firebaseConfig = {
     appId: "1:135743100693:web:1cabbf515629ce9c503b1c",
     measurementId: "G-LLYDXNS7VB"
 };
-const firebaseApp = initializeApp(firebaseConfig)
 
-export default firebaseApp
+export const firebaseApp = firebase.initializeApp(firebaseConfig)
+
+export const auth = firebase.auth()
