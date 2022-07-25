@@ -2,28 +2,24 @@ import React, {useState} from "react"
 import Image from "next/image"
 import { signIn } from "../utils/firebase/firebase-auth"
 import Message from "../components/message"
-import Error from "next/error"
+import { auth } from "../utils/firebase/firebase"
 
 const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [failed, setFailed] = useState(false)
 
+     
     const handleSubmit = async () => {
-        try {
-            await signIn(username, password)
-        } catch(error) {
-            if (error instanceof Error) {
-                setFailed(true)
-                console.log("error")
-                setTimeout(() => {
-                    setFailed(false)
-                },3000)
-            }
+            await auth.signInWithEmailAndPassword(username, password)
+            setFailed(true)
+            console.log(failed)
+            setTimeout(() => {
+                setFailed(false)
+            },3000)
 
-        } 
-    }
-
+        }     
+    
     return (
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
