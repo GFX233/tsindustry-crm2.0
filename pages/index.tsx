@@ -7,8 +7,8 @@ const Orders: NextPage = () => {
       const [orderData, setOrderData] = useState({})
       const [itemId, setId] = useState("")
     
-      const getTotal = (data, item) => {
-        const totalReduce = data.reduce((total, current) => {
+      const getTotal = (data: object[], item: string) => {
+        const totalReduce = data.reduce((total, current: ) => {
           return total += parseInt(current[item])
         }, 0)
         return totalReduce
