@@ -4,6 +4,8 @@ import firebase from "firebase/compat/app";
 import Login from "../pages/login"
 import { auth } from "../utils/firebase/firebase"
 
+
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -19,6 +21,7 @@ export const AuthProvider: React.FC<LayoutProps> = ({ children }) => {
     console.log(user)
     return unsubscribe;
   }, []);
+
 
   return <AuthContext.Provider value={user}>{user !== null ? children : <Login />}</AuthContext.Provider>;
 };
