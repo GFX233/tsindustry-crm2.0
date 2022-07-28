@@ -1,8 +1,67 @@
 import { NextPage } from "next"
+import { useState } from "react"
+import SortingButton from "../components/toggleButton"
+
+export type DisplayList = {
+  [name: string]: string,
+  surname: string
+}
+
+export type Order = {
+  customer: string,
+  date: string,
+  id: string,
+  op1: string | number,
+  op2: string | number,
+  orderNum: string | number,
+  partCount: number,
+  partName: string,
+  price: number,
+  time: string | number
+}
 
 const Orders: NextPage = () => {
-      const [data, setData] = useOutletContext()
-      const [displayList, setDisplayList] = useState([...data.orders])
+  const [displayList, setDisplayList] = useState<DisplayList[]>([
+    {
+      name: "Tomas",
+      surname: "Spacil"
+    },
+    {
+      name: "Katy",
+      surname: "Spacil"
+    }
+  ])
+
+  const handleSort = (withWhat: keyof DisplayList, ascending: boolean | undefined) => {
+    const sorted = displayList.slice().sort((a, b) => {
+      if (ascending) {
+        if (a[withWhat] < b[withWhat]) {
+          return -1;
+        } else if (a[withWhat] > b[withWhat]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      } else {
+        if (a[withWhat] < b[withWhat]) {
+          return 1;
+        } else if (a[withWhat] > b[withWhat]) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    })
+    console.log(sorted)
+    console.log(ascending)
+    return(sorted)
+  }
+  return (
+
+
+    <SortingButton onClick={ handleSort } withWhat="name" />
+  )
+/*      const [displayList, setDisplayList] = useState([...data.orders])
       const [update, setUpdate] = useState(false)
       const [orderData, setOrderData] = useState({})
       const [itemId, setId] = useState("")
@@ -102,8 +161,15 @@ const Orders: NextPage = () => {
             </div>
           </div>
         </div>
-      )
+      )*/
     }
 
 
 export default Orders
+
+export async function getServerSideProps(context) {
+  const data = 
+  return {
+
+  }
+}
