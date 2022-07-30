@@ -1,38 +1,28 @@
-import { NextPage } from "next"
-import { useState } from "react"
-import SortingButton from "../components/toggleButton"
+import { useState } from "react";
+import SortingButton from "../components/toggleButton";
+import { getOrders } from "../utils/firebase/firebase-db";
 
-export type DisplayList = {
-  [name: string]: string,
-  surname: string
-}
 
 export type Order = {
-  customer: string,
-  date: string,
-  id: string,
-  op1: string | number,
-  op2: string | number,
-  orderNum: string | number,
-  partCount: number,
-  partName: string,
-  price: number,
-  time: string | number
-}
+  customer: string;
+  date: string;
+  id: string;
+  op1: string | number;
+  op2: string | number;
+  orderNum: string | number;
+  partCount: number;
+  partName: string;
+  price: number;
+  time: string | number;
+};
 
-const Orders: NextPage = () => {
-  const [displayList, setDisplayList] = useState<DisplayList[]>([
-    {
-      name: "Tomas",
-      surname: "Spacil"
-    },
-    {
-      name: "Katy",
-      surname: "Spacil"
-    }
-  ])
+const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
+  const [displayList, setDisplayList] = useState<Order[]>(data);
 
-  const handleSort = (withWhat: keyof DisplayList, ascending: boolean | undefined) => {
+  const handleSort = (
+    withWhat: keyof Order,
+    ascending: boolean | undefined
+  ) => {
     const sorted = displayList.slice().sort((a, b) => {
       if (ascending) {
         if (a[withWhat] < b[withWhat]) {
@@ -51,17 +41,31 @@ const Orders: NextPage = () => {
           return 0;
         }
       }
-    })
-    console.log(sorted)
-    console.log(ascending)
-    return(sorted)
-  }
+    });
+    console.log(sorted);
+    console.log(ascending);
+    return sorted;
+  };
   return (
+    <>
+    { displayList.map((item, idx) => {
+                  return (
+                    <tr className="hover" key={ idx }>
+                      <th>{ idx }</th>
+                      <td>{ item.date }</td>
+                      <td>{ item.customer }</td>
+                      <td>{ item.orderNum }</td>
+                      <td>{ item.partName }</td>
+                      <td>{ item.partCount }</td>
+                      <td>{ item.price }</td>
 
-
-    <SortingButton onClick={ handleSort } withWhat="name" />
-  )
-/*      const [displayList, setDisplayList] = useState([...data.orders])
+                    </tr>
+                  )
+                }) }
+      <SortingButton onClick={handleSort} withWhat="name" />
+    </>
+    );
+  /*      const [displayList, setDisplayList] = useState([...data.orders])
       const [update, setUpdate] = useState(false)
       const [orderData, setOrderData] = useState({})
       const [itemId, setId] = useState("")
@@ -162,14 +166,12 @@ const Orders: NextPage = () => {
           </div>
         </div>
       )*/
-    }
+};
 
+export default Orders;
 
-export default Orders
+export async function getServerSideProps() {
+  const data = await getOrders();
 
-export async function getServerSideProps(context) {
-  const data = 
-  return {
-
-  }
+  return { props: { data } };
 }

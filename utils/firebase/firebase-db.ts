@@ -38,10 +38,12 @@ export const deleteItem = async (id: string) => {
 
 export const getOrders = async () => {
     const dataQuery = await getDocs(query(collection(db, "orders")))
-    const data: object[] = []
+    const data: object[]= []
     dataQuery.docs.forEach(doc => {
         data.push({ ...doc.data(), id: doc.id })
     })
+    console.log(data)
+    console.log("HELLO")
     return data
 }
 
