@@ -2,12 +2,11 @@ export type Order = {
   customer: string;
   date: string;
   id: string;
-  op1: string | number;
-  op2: string | number;
-  orderNum: string | number;
-  partCount: number;
+  op1: string;
+  op2: string;
+  orderNum: string;
+  partCount: string;
   partName: string;
-  price: number;
-  time: string | number;
+  price: string;
+  time: string;
 };
-
