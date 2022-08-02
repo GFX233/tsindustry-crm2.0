@@ -36,7 +36,7 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
 
   return (
     <>
-    <div className="flex flex-row mt-4 mx-">
+    <div className="flex flex-row mt-4 justify-center">
       <SidebarIndex />
       <div className="shadow-md sm:rounded-lg max-w-5xl">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
