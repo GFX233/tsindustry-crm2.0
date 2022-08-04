@@ -7,30 +7,3 @@
   }, 0)
   return totalReduce
 }
-
-const handleSort = (
-  what: object[],
-  withWhat: keyof object,
-  ascending: boolean
-): object[] => {
-  const sorted = what.slice().sort((a, b) => {
-    if (ascending) {
-      if (a[withWhat] < b[withWhat]) {
-        return -1;
-      } else if (a[withWhat] > b[withWhat]) {
-        return 1;
-      } else {
-        return 0;
-      }
-    } else {
-      if (a[withWhat] < b[withWhat]) {
-        return 1;
-      } else if (a[withWhat] > b[withWhat]) {
-        return -1;
-      } else {
-        return 0;
-      }
-    }
-  });
-  return (sorted);
-};
