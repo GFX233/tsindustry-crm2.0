@@ -37,9 +37,9 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
   return (
     <>
     <div className="flex flex-row mt-4 justify-center">
-      <SidebarIndex />
-      <div className="shadow-md sm:rounded-lg max-w-5xl">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <SidebarIndex data={data} setDisplayList={setDisplayList}/>
+      <div className="shadow-md sm:rounded-lg max-w-5xl w-7/12">
+        <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
           <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
             List zakázek
             <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -52,36 +52,36 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
             <tr>
               <th></th>
               <th>
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Date <SortingButton onClick={handleSort} withWhat="date" />
                 </label>
               </th>
               <th>
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Customer{" "}
                   <SortingButton onClick={handleSort} withWhat="customer" />
                 </label>
               </th>
               <th>
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Order{" "}
                   <SortingButton onClick={handleSort} withWhat="orderNum" />
                 </label>
               </th>
               <th>
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Part name{" "}
                   <SortingButton onClick={handleSort} withWhat="partName" />
                 </label>
               </th>
               <th className="text-center">
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Count{" "}
                   <SortingButton onClick={handleSort} withWhat="partCount" />
                 </label>
               </th>
               <th>
-                <label className="flex gap-2">
+                <label className="flex gap-2 items-center justify-center">
                   Price <SortingButton onClick={handleSort} withWhat="price" />
                 </label>
               </th>

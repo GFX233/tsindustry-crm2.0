@@ -3,7 +3,7 @@ import Image from "next/image";
 interface SidebarButtonProps {
   name: string;
   icon?: string;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({name, icon, onClick}) => {
@@ -15,6 +15,7 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({name, icon, onClick}) => {
       <div className="flex flex-row justify-between w-full">
         {icon && <Image src={icon} width={24} height={24} />}
         {name}
+        <div className="w-6"></div>
       </div>
     </button>
   );
