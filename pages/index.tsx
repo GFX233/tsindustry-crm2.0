@@ -4,6 +4,7 @@ import { getOrders } from "../utils/firebase/firebase-db";
 import { getTotal } from "../utils/helpers/orders";
 import type { Order } from "../utils/types/types";
 import SidebarIndex from "../components/sidebar-index";
+import AddCustomer from "../components/addCustomer";
 
 const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
   const [displayList, setDisplayList] = useState<Order[]>(data);
@@ -37,6 +38,7 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
   return (
     <>
     <div className="flex flex-row mt-4 justify-center">
+      
       <SidebarIndex data={data} setDisplayList={setDisplayList}/>
       <div className="shadow-md sm:rounded-lg max-w-5xl w-7/12">
         <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
