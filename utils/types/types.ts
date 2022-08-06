@@ -10,3 +10,8 @@ export type Order = {
   price: string;
   time: string;
 };
+
+export type Customer = {
+  name: string;
+  hourRate: string;
+};
