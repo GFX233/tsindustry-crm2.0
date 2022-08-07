@@ -1,13 +1,13 @@
 import { useState } from "react";
 import SortingButton from "../components/toggleButton";
-import { getOrders } from "../utils/firebase/firebase-db";
+import { getOrders, getCustomers } from "../utils/firebase/firebase-db";
 import { getTotal } from "../utils/helpers/orders";
-import type { Order } from "../utils/types/types";
+import type { Order, Customer } from "../utils/types/types";
 import SidebarIndex from "../components/sidebar-index";
 import AddCustomer from "../components/addCustomer";
 
-const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
-  const [displayList, setDisplayList] = useState<Order[]>(data);
+const Orders: React.FC<{ ordersData: Order[], customersData: Customer[] }> = ({ ordersData, customersData }) => {
+  const [displayList, setDisplayList] = useState<Order[]>(ordersData);
 
   const handleSort = (
     withWhat: keyof Order,
@@ -39,7 +39,7 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
     <>
     <div className="flex flex-row mt-4 justify-center">
       
-      <SidebarIndex data={data} setDisplayList={setDisplayList}/>
+      <SidebarIndex data={ordersData} customers={customersData} setDisplayList={setDisplayList}/>
       <div className="shadow-md sm:rounded-lg max-w-5xl w-7/12">
         <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
           <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
@@ -112,57 +112,13 @@ const Orders: React.FC<{ data: Order[] }> = ({ data }) => {
       </div>
     </>
   );
-  /*      const [displayList, setDisplayList] = useState([...data.orders])
-      const [update, setUpdate] = useState(false)
-      const [orderData, setOrderData] = useState({})
-      const [itemId, setId] = useState("")
-    
-      const getTotal = (data: object[], item: string) => {
-        const totalReduce = data.reduce((total, current: ) => {
-          return total += parseInt(current[item])
-        }, 0)
-        return totalReduce
-      }
-
-      const handleDelete = (id) => {
-        const newList = data.orders.filter(item => item.id !== id)
-        deleteItem(id)
-        return setData({ ...data, orders: newList })
-      }
-    
-      const handleUpdate = async (id) => {
-        setId(id)
-        setOrderData(await getInfo("orders", id))
-        setUpdate(true)
-      }
-    
-      return (
-        <div className="container flex flex-col p-4 w-full">
-          <div className="divider m-0 pb-4">ORDERS LIST</div>
-          <div className="flex flex-row justify-between">
-            <Filter orderList={ data.orders } setDisplayList={ setDisplayList } />
-            <div className="flex flex-row gap-4 pb-4">
-              <ExportCSVButton data={displayList} />
-              <PrintButton onClick={ () => generatePDF(displayList) } />
-              <AddCustomer />
-              <AddOrder />
-            </div>
-          </div>
-          { update && <UpdateOrder setUpdate={ setUpdate } orderData={ orderData } id={ itemId } /> }
-
-            <div className="flex flex-row justify-around">
-              <p>TOTAL PART COUNT: {getTotal(displayList, "partCount")}</p>
-              <p>TOTAL PRICE: {getTotal(displayList, "price")}</p>
-            </div>
-          </div>
-        </div>
-      )*/
 };
 
 export default Orders;
 
 export async function getServerSideProps() {
-  const data = await getOrders();
+  const ordersData = await getOrders();
+  const customersData = await getCustomers()
 
-  return { props: { data } };
+  return { props: { ordersData, customersData } };
 }

@@ -2,34 +2,23 @@ import Dropdown from "./dropdown";
 import Input from "./input";
 import SidebarButton from "./sidebarButton";
 import { useState, useEffect } from "react";
-import type { Order } from "../utils/types/types";
+import type { Order, Customer} from "../utils/types/types";
+import Button from "./button";
+import AddOrder from "./orders/addOrder";
 
 
 interface SidebarProps {
   data: Order[]
+  customers: Customer[]
   setDisplayList: React.Dispatch<React.SetStateAction<Order[]>>
 }
 
 
-const SidebarIndex: React.FC<SidebarProps> = ({data, setDisplayList}) => {
+const SidebarIndex: React.FC<SidebarProps> = ({data, customers, setDisplayList}) => {
 
 // Create order useState
 
-  const [order, setOrder] = useState({
-    date: new Date().toISOString().substring(0,10),
-    customer: "",
-    orderNum: "",
-    partName: "",
-    partCount: "",
-    op1: "",
-    op2: "",
-    time: "",
-    price: ""
-})
 
-const handleOrderChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
-  setOrder({...order, [key]: e.target.value})
-}
 
   // Create customer useState`s
 
@@ -71,19 +60,7 @@ const handleOrderChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) 
   return (
     <div className="w-64" aria-label="Sidebar">
       <div className="py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full">
-        <Dropdown name="Přidat zákázku" icon="/adddoc.svg">
-          <ul className="flex flex-col mt-2">
-            <Input name="Datum:" type="date" value={order.date} onChange={(e) => handleOrderChange("date", e)}/>
-            <Input name="Zákazník:" type="text" value={order.customer} onChange={(e) => handleOrderChange("customer", e)}/>
-            <Input name="Číslo zakázky:" type="text" value={order.orderNum} onChange={(e) => handleOrderChange("orderNum", e)}/>
-            <Input name="Název dílu:" type="text" value={order.partName} onChange={(e) => handleOrderChange("partName", e)}/>
-            <Input name="Počet dílů:" type="text" value={order.partCount} onChange={(e) => handleOrderChange("partCount", e)}/>
-            <Input name="Čas OP1:" type="text" value={order.op1} onChange={(e) => handleOrderChange("op1", e)}/>
-            <Input name="Čas OP2:" type="text" value={order.op2} onChange={(e) => handleOrderChange("op2", e)}/>
-            <Input name="Čas strojní celkem:" type="text" value={order.time} onChange={(e) => handleOrderChange("time", e)}/>
-            <Input name="Cena za celek:" type="text" value={order.price} onChange={(e) => handleOrderChange("price", e)}/>
-          </ul>
-        </Dropdown>
+        <AddOrder customers={customers}/>
         <Dropdown name="Přidat zákazníka" icon="/addcustomer.svg">
           <ul className="flex flex-col mt-2">
             <Input name="Jméno zákazníka:" type="text" value={customer.name} onChange={(e) => handleCustomerChange("name", e)}/>
