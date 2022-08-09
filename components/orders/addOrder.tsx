@@ -1,17 +1,29 @@
 import { MutableRefObject, useRef, useState } from "react";
+import type { Order } from "../../utils/types/types";
+import { addData } from "../../utils/firebase/firebase-db";
+import { Customer } from "../../utils/types/types";
 import Dropdown from "../dropdown";
 import Input from "../input";
 import Button from "../button";
 import Select from "../select";
-import { addData } from "../../utils/firebase/firebase-db";
-import { Customer } from "../../utils/types/types";
+import Message from "../message";
 
-const AddOrder: React.FC<AddOrderProps> = ({ customers }) => {
+interface AddOrderProps {
+  customers: Customer[];
+  orders: Order[];
+  setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
+}
+
+const AddOrder: React.FC<AddOrderProps> = ({
+  customers,
+  orders,
+  setOrders,
+}) => {
   const customersList = customers.map((customer) => {
     return customer.name;
   });
   const customersSelect = useRef() as MutableRefObject<HTMLSelectElement>;
-  const setFocus = useRef() as MutableRefObject<HTMLInputElement>
+  const setFocus = useRef() as MutableRefObject<HTMLInputElement>;
 
   const [failure, setFailure] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -49,44 +61,43 @@ const AddOrder: React.FC<AddOrderProps> = ({ customers }) => {
           ? String(parseInt(customers[idx].hourRate) * parseInt(order.time))
           : order.price,
     });
-    setOrder({
-      ...order,
-      orderNum: "",
-      partName: "",
-      partCount: "0",
-      op1: "0",
-      op2: "0",
-      time: "",
-      price: "",
-    });
-    setSuccess(true);
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
-    setFocus.current.focus();
-  
-    return setData({
-      ...data,
-      orders: [
-        ...data.orders,
+
+    if (docData) {
+      setOrder({
+        ...order,
+        orderNum: "",
+        partName: "",
+        partCount: "0",
+        op1: "0",
+        op2: "0",
+        time: "",
+        price: "",
+      });
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+      setFocus.current.focus();
+      setOrders([
+        ...orders,
         {
           ...order,
           price:
             order.price === ""
-              ? data.customers[idx].hourRate * order.time
+              ? String(parseInt(customers[idx].hourRate) * parseInt(order.time))
               : order.price,
           id: docData.id,
-          partCount: parseInt(order.partCount),
+          partCount: order.partCount,
         },
-      ],
-    });
+      ]);
+    }
   };
 
   return (
     <Dropdown name="Přidat zákázku" icon="/adddoc.svg">
       <ul className="flex flex-col mt-2">
         <Select
-          ref={customersSelect}
+          referer={customersSelect}
           name="Zákazník"
           value={order.customer}
           onChange={(e) => handleOrderChange("customer", e)}
@@ -99,7 +110,7 @@ const AddOrder: React.FC<AddOrderProps> = ({ customers }) => {
           onChange={(e) => handleOrderChange("date", e)}
         />
         <Input
-          ref={setFocus}
+          referer={setFocus}
           name="Číslo zakázky:"
           type="text"
           value={order.orderNum}
@@ -143,12 +154,10 @@ const AddOrder: React.FC<AddOrderProps> = ({ customers }) => {
         />
         <Button name="Přidat zakázku" onClick={addDoc} />
       </ul>
+      {failure ?? <Message text="Zakázka nebyla přidána" alert={true} />}
+      {success ?? <Message text="Zakázka úspěšně přidána!" success={true} />}
     </Dropdown>
   );
 };
-
-interface AddOrderProps {
-  customers: Customer[];
-}
 
 export default AddOrder;
