@@ -94,6 +94,7 @@ const AddOrder: React.FC<AddOrderProps> = ({
   };
 
   return (
+    <>
     <Dropdown name="Přidat zákázku" icon="/adddoc.svg">
       <ul className="flex flex-col mt-2">
         <Select
@@ -154,9 +155,10 @@ const AddOrder: React.FC<AddOrderProps> = ({
         />
         <Button name="Přidat zakázku" onClick={addDoc} />
       </ul>
-      {failure ?? <Message text="Zakázka nebyla přidána" alert={true} />}
-      {success ?? <Message text="Zakázka úspěšně přidána!" success={true} />}
     </Dropdown>
+          {failure && <Message text="Zakázka nebyla přidána. Vyplňte zákazníka!" alert={true} />}
+          {success && <Message text="Zakázka úspěšně přidána!" success={true} />}
+          </>
   );
 };
 
