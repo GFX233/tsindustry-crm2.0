@@ -3,7 +3,7 @@ import SortingButton from "../components/toggleButton";
 import { getOrders, getCustomers } from "../utils/firebase/firebase-db";
 import { getTotal } from "../utils/helpers/orders";
 import type { Order, Customer } from "../utils/types/types";
-import SidebarIndex from "../components/sidebar-index";
+import SidebarIndex from "../components/orders/sidebar-index";
 import AddCustomer from "../components/orders/addCustomer";
 import UpdateOrder from "../components/orders/updateOrder";
 
