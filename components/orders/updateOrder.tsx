@@ -74,7 +74,8 @@ const handleDelete = (id: string) => {
     setSuccess(true)
     setTimeout(() => {
         setSuccess(false)
-    },3000)
+        setToggleUpdate(false)
+    },1500)
     setOrders(newList)
     setOrder(emptyOrder)
   } else {
@@ -160,9 +161,9 @@ const handleDelete = (id: string) => {
         <Button name="Smazat zakázku" onClick={() => handleDelete(order.id)} />
 
         </div>
+        {success && <Message text="Zakázka úspěšně upravena/odstraněna!" success={true} />}
+        {failure && <Message text="Zakázka nenalezena!" alert={true} />}
       </div> 
-      {success && <Message text="Zakázka úspěšně upravena/odstraněna!" success={true} />}
-      {failure && <Message text="Zakázka nenalezena!" alert={true} />}
     </>
   )
 }

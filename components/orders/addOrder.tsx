@@ -95,70 +95,89 @@ const AddOrder: React.FC<AddOrderProps> = ({
 
   return (
     <>
-    <Dropdown name="Přidat zákázku" icon="/adddoc.svg">
-      <ul className="flex flex-col mt-2">
-        <Select
-          referer={customersSelect}
-          name="Zákazník"
-          value={order.customer}
-          onChange={(e) => handleOrderChange("customer", e)}
-          options={customersList}
+      <Dropdown name="Přidat zákázku" icon="/adddoc.svg">
+        <ul className="flex flex-col mt-2">
+          <Select
+            referer={customersSelect}
+            name="Zákazník"
+            value={order.customer}
+            onChange={(e) => handleOrderChange("customer", e)}
+            options={customersList}
+          />
+          <Input
+            name="Datum:"
+            type="date"
+            value={order.date}
+            onChange={(e) => handleOrderChange("date", e)}
+          />
+          <Input
+            referer={setFocus}
+            name="Číslo zakázky:"
+            type="text"
+            value={order.orderNum}
+            onChange={(e) => handleOrderChange("orderNum", e)}
+          />
+          <Input
+            name="Název dílu:"
+            type="text"
+            value={order.partName}
+            onChange={(e) => handleOrderChange("partName", e)}
+          />
+          <Input
+            name="Počet dílů:"
+            type="text"
+            value={order.partCount}
+            onChange={(e) => handleOrderChange("partCount", e)}
+          />
+          <Input
+            name="Čas OP1:"
+            type="text"
+            value={order.op1}
+            onChange={(e) => handleOrderChange("op1", e)}
+          />
+          <Input
+            name="Čas OP2:"
+            type="text"
+            value={order.op2}
+            onChange={(e) => handleOrderChange("op2", e)}
+          />
+          <input
+            type="text"
+            readOnly
+            value={
+              parseInt(order.partCount) * parseInt(order.op1) * parseInt(order.op2) > 0
+                ? `${(
+                    ((parseInt(order.op1) + parseInt(order.op2)) *
+                      parseInt(order.partCount)) /
+                    60
+                  ).toFixed(2)} H`
+                : 0
+            }
+            className="mb-4 block px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          />
+          <Input
+            name="Čas strojní celkem:"
+            type="text"
+            value={order.time}
+            onChange={(e) => handleOrderChange("time", e)}
+          />
+          <Input
+            name="Cena za celek:"
+            type="text"
+            value={order.price}
+            onChange={(e) => handleOrderChange("price", e)}
+          />
+          <Button name="Přidat zakázku" onClick={addDoc} />
+        </ul>
+      </Dropdown>
+      {failure && (
+        <Message
+          text="Zakázka nebyla přidána. Vyplňte zákazníka!"
+          alert={true}
         />
-        <Input
-          name="Datum:"
-          type="date"
-          value={order.date}
-          onChange={(e) => handleOrderChange("date", e)}
-        />
-        <Input
-          referer={setFocus}
-          name="Číslo zakázky:"
-          type="text"
-          value={order.orderNum}
-          onChange={(e) => handleOrderChange("orderNum", e)}
-        />
-        <Input
-          name="Název dílu:"
-          type="text"
-          value={order.partName}
-          onChange={(e) => handleOrderChange("partName", e)}
-        />
-        <Input
-          name="Počet dílů:"
-          type="text"
-          value={order.partCount}
-          onChange={(e) => handleOrderChange("partCount", e)}
-        />
-        <Input
-          name="Čas OP1:"
-          type="text"
-          value={order.op1}
-          onChange={(e) => handleOrderChange("op1", e)}
-        />
-        <Input
-          name="Čas OP2:"
-          type="text"
-          value={order.op2}
-          onChange={(e) => handleOrderChange("op2", e)}
-        />
-        <Input
-          name="Čas strojní celkem:"
-          type="text"
-          value={order.time}
-          onChange={(e) => handleOrderChange("time", e)}
-        />
-        <Input
-          name="Cena za celek:"
-          type="text"
-          value={order.price}
-          onChange={(e) => handleOrderChange("price", e)}
-        />
-        <Button name="Přidat zakázku" onClick={addDoc} />
-      </ul>
-    </Dropdown>
-          {failure && <Message text="Zakázka nebyla přidána. Vyplňte zákazníka!" alert={true} />}
-          {success && <Message text="Zakázka úspěšně přidána!" success={true} />}
-          </>
+      )}
+      {success && <Message text="Zakázka úspěšně přidána!" success={true} />}
+    </>
   );
 };
 

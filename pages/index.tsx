@@ -4,16 +4,15 @@ import { getOrders, getCustomers } from "../utils/firebase/firebase-db";
 import { getTotal } from "../utils/helpers/orders";
 import type { Order, Customer } from "../utils/types/types";
 import SidebarIndex from "../components/orders/sidebar-index";
-import AddCustomer from "../components/orders/addCustomer";
 import UpdateOrder from "../components/orders/updateOrder";
 
 const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
   ordersData,
   customersData,
 }) => {
-  const [orders, setOrders] = useState<Order[]>(ordersData);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [customers, setCustomers] = useState<Customer[]>(customersData);
-  const [displayList, setDisplayList] = useState<Order[]>([]);
+  const [displayList, setDisplayList] = useState<Order[]>(ordersData);
   const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
   const [orderInfo, setOrderInfo] = useState<Order>({
     date: "",
@@ -29,8 +28,8 @@ const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
   });
 
   useEffect(() => {
-    setDisplayList(orders);
-  }, [orders]);
+    setOrders(ordersData);
+  }, []);
 
   const handleOrderUpdate = (item: Order) => {
     setOrderInfo(item);
@@ -69,11 +68,12 @@ const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
         <SidebarIndex
           orders={orders}
           customers={customers}
+          displayList={displayList}
           setOrders={setOrders}
           setDisplayList={setDisplayList}
           setCustomers={setCustomers}
         />
-        <div className="shadow-md sm:rounded-lg max-w-5xl w-7/12">
+        <div className="shadow-md sm:rounded-lg max-w-5xl overflow-x-auto relative">
           <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
               List zakázek
