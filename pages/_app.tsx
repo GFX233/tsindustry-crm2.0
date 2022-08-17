@@ -1,17 +1,17 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout"
-import { AuthProvider } from "../context/AuthProvider";
+import { DataProvider } from "../context/dataProvider";
 
 
 const App = ({ Component, pageProps }: AppProps) => {
 
   return (
-    <AuthProvider>
+    <DataProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </AuthProvider>
+    </DataProvider>
   );
 }
 

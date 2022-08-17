@@ -1,3 +1,5 @@
+import firebase from "firebase/compat/app";
+
 export type Order = {
   customer: string;
   date: string;
@@ -15,3 +17,9 @@ export type Customer = {
   name: string;
   hourRate: string;
 };
+
+export type Data = {
+  user: firebase.User | null
+  customers: Customer[];
+  orders: Order[]
+}
