@@ -46,6 +46,13 @@ const AddOrder: React.FC<AddOrderProps> = ({
     setOrder({ ...order, [key]: e.target.value });
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+        const sum: string = String(parseInt(order.op1) + parseInt(order.op2))
+        setOrder({...order, "op1": sum, "op2": ""})
+    }
+}
+
   const addDoc = async () => {
     if (order.customer === "") {
       setTimeout(() => {
@@ -140,6 +147,7 @@ const AddOrder: React.FC<AddOrderProps> = ({
             type="text"
             value={order.op2}
             onChange={(e) => handleOrderChange("op2", e)}
+            onKeyDown={(e) => handleKeyDown(e)}
           />
           <input
             type="text"
