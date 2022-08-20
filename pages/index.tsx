@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import SortingButton from "../components/toggleButton";
-import { getOrders, getCustomers } from "../utils/firebase/firebase-db";
 import { getTotal } from "../utils/helpers/orders";
 import type { Order, Customer } from "../utils/types/types";
 import SidebarIndex from "../components/orders/sidebar-index";
 import UpdateOrder from "../components/orders/updateOrder";
+import { DataContext } from "../context/dataContext";
 
-const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
-  ordersData,
-  customersData,
-}) => {
+const Orders: React.FC = () => {
+  const data = useContext(DataContext)
   const [orders, setOrders] = useState<Order[]>([]);
-  const [customers, setCustomers] = useState<Customer[]>(customersData);
-  const [displayList, setDisplayList] = useState<Order[]>(ordersData);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [displayList, setDisplayList] = useState<Order[]>([]);
   const [toggleUpdate, setToggleUpdate] = useState<boolean>(false);
   const [orderInfo, setOrderInfo] = useState<Order>({
     date: "",
@@ -28,8 +26,10 @@ const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
   });
 
   useEffect(() => {
-    setOrders(ordersData);
-  }, []);
+    setOrders(data?.orders);
+    setCustomers(data?.customers)
+    setDisplayList(data?.orders)
+  }, [data]);
 
   const handleOrderUpdate = (item: Order) => {
     setOrderInfo(item);
@@ -159,10 +159,3 @@ const Orders: React.FC<{ ordersData: Order[]; customersData: Customer[] }> = ({
 };
 
 export default Orders;
-
-export async function getServerSideProps() {
-  const ordersData = await getOrders();
-  const customersData = await getCustomers();
-
-  return { props: { ordersData, customersData } };
-}
