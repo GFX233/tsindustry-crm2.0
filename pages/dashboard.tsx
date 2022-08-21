@@ -5,6 +5,7 @@ import LineChart from "../components/dashboard/lineChart"
 import DoughnutChart from "../components/dashboard/doughnutChart"
 import type { Order } from "../utils/types/types"
 import Input from "../components/input"
+import Head from 'next/head'
 
 
 const Dashboard: NextPage = () => {
@@ -45,11 +46,18 @@ const Dashboard: NextPage = () => {
 
   const getMoneyOnCustomer = () => {
       const orders: Order[] = getFilteredOrders(5, 7)
-      const reducedOrders = orders.reduce((accumulator: Accu[], item: Order) => {
-          accumulator[(item.customer as keyof Accu] = (parseInt(accumulator[item.customer as keyof Accu]) || 0) + parseInt(item.price)
+      const reducedOrders: Accu[] = orders.reduce((accumulator: Order[], item: Order) => {
+          accumulator[item.customer as keyof Order] = (parseInt(accumulator[item.customer as keyof Accu]) || 0) + parseInt(item.price)
           return accumulator;
       }, []);
       return reducedOrders
+  }
+
+  const getMoneyOnCustomer2 = (data: Order[]) => {
+    let customers: {} = []
+    data.forEach(item => {
+     customers = []
+    })
   }
 
   const getMonthlyPerformance = () => {
@@ -71,6 +79,11 @@ const Dashboard: NextPage = () => {
   }
 
   return (
+    <>
+      <Head>
+        <title>DASHBOARD: TS INDUSTRY SYSTEMS</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <div className="w-full h-screen p-4 gap-4">
             <Input
               name="Datum:"
@@ -84,11 +97,11 @@ const Dashboard: NextPage = () => {
               <div className="stats stats-vertical shadow">
                   <div className="stat place-items-center">
                       <div className="stat-title">This Month Total</div>
-                      <div className="stat-value text-accent">{ thisMonthTotal > 1000 ? `${(thisMonthTotal / 1000).toFixed(2)} M` : `${thisMonthTotal} K` }</div>
+                      <div className="stat-value text-accent">{ parseInt(thisMonthTotal) > 1000 ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M` : `${thisMonthTotal} K` }</div>
                   </div>
                   <div className="stat place-items-center">
                       <div className="stat-title">Previous Month</div>
-                      <div className="stat-value">{ lastMonthTotal > 1000 ? `${(lastMonthTotal / 1000).toFixed(2)} M` : `${lastMonthTotal} K` }</div>
+                      <div className="stat-value">{ parseInt(lastMonthTotal) > 1000 ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M` : `${lastMonthTotal} K` }</div>
                   </div>
                   <div className="stat place-items-center">
                       <div className="stat-title">Parts Made This Month</div>
@@ -99,7 +112,7 @@ const Dashboard: NextPage = () => {
               <div className="stats stats-vertical shadow">
                   <div className="stat place-items-center">
                       <div className="stat-title">This Year Total</div>
-                      <div className="stat-value">{ thisYearTotal > 1000 ? `${(thisYearTotal / 1000).toFixed(2)} M` : `${thisYearTotal} K` }</div>
+                      <div className="stat-value">{ parseInt(thisYearTotal) > 1000 ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M` : `${thisYearTotal} K` }</div>
                   </div>
                   <div className="stat place-items-center">
                       <div className="stat-title">This Month Total</div>
@@ -114,6 +127,7 @@ const Dashboard: NextPage = () => {
           <div className="divider my-10">MONTHLY BREAKDOWN</div>
           <LineChart orderData={ getMonthlyPerformance() } />
       </div >
+      </>
   )
 }
 
