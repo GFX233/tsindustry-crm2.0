@@ -5,6 +5,7 @@ import type { Order, Customer } from "../utils/types/types";
 import SidebarIndex from "../components/orders/sidebar-index";
 import UpdateOrder from "../components/orders/updateOrder";
 import { DataContext } from "../context/dataContext";
+import Head from 'next/head'
 
 const Orders: React.FC = () => {
   const data = useContext(DataContext)
@@ -36,6 +37,8 @@ const Orders: React.FC = () => {
     setToggleUpdate(true);
   };
 
+
+
   const handleSort = (
     withWhat: keyof Order,
     ascending: boolean | undefined
@@ -64,6 +67,10 @@ const Orders: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>ORDERS: TS INDUSTRY SYSTEMS</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <div className="flex flex-row mt-4 justify-center">
         <SidebarIndex
           orders={orders}

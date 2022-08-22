@@ -40,21 +40,21 @@ const Dashboard: NextPage = () => {
       return total
   }
 
-  interface Accu {
+  interface MoneyOnCustomer {
       customer: number
   }
 
   const getMoneyOnCustomer = () => {
       const orders: Order[] = getFilteredOrders(5, 7)
-      const reducedOrders: Accu[] = orders.reduce((accumulator: Order[], item: Order) => {
-          accumulator[item.customer as keyof Order] = (parseInt(accumulator[item.customer as keyof Accu]) || 0) + parseInt(item.price)
+      const reducedOrders: MoneyOnCustomer[] = orders.reduce((accumulator: MoneyOnCustomer, item: Order) => {
+          accumulator[item.customer as keyof MoneyOnCustomer] = (parseInt(accumulator[item.customer as keyof Accu]) || 0) + parseInt(item.price)
           return accumulator;
       }, []);
       return reducedOrders
   }
 
   const getMoneyOnCustomer2 = (data: Order[]) => {
-    let customers: {} = []
+    let customers: {customer: number}[] = []
     data.forEach(item => {
      customers = []
     })
