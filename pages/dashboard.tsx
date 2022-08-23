@@ -6,6 +6,7 @@ import DoughnutChart from "../components/dashboard/doughnutChart"
 import type { Order } from "../utils/types/types"
 import Input from "../components/input"
 import Head from 'next/head'
+import Card from "../components/card"
 
 
 const Dashboard: NextPage = () => {
@@ -103,6 +104,7 @@ const Dashboard: NextPage = () => {
                       <div className="stat-title">Previous Month</div>
                       <div className="stat-value">{ parseInt(lastMonthTotal) > 1000 ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M` : `${lastMonthTotal} K` }</div>
                   </div>
+                  <Card placeholder="Part this month" text={String(getPartsTotal(getFilteredOrders(5, 7)))} />
                   <div className="stat place-items-center">
                       <div className="stat-title">Parts Made This Month</div>
                       <div className="stat-value">{ getPartsTotal(getFilteredOrders(5, 7)) }</div>
