@@ -94,22 +94,9 @@ const Dashboard: NextPage = () => {
             />
           <div className="divider my-10">THIS MONTH STATS</div>
           <div className="flex flex-row justify-between">
-
-              <div className="stats stats-vertical shadow">
-                  <div className="stat place-items-center">
-                      <div className="stat-title">This Month Total</div>
-                      <div className="stat-value text-accent">{ parseInt(thisMonthTotal) > 1000 ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M` : `${thisMonthTotal} K` }</div>
-                  </div>
-                  <div className="stat place-items-center">
-                      <div className="stat-title">Previous Month</div>
-                      <div className="stat-value">{ parseInt(lastMonthTotal) > 1000 ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M` : `${lastMonthTotal} K` }</div>
-                  </div>
+                  <Card placeholder="This Month Total" text={String(parseInt(thisMonthTotal) > 1000 ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M` : `${thisMonthTotal} K` )}  />
+                  <Card placeholder="Previous Month" text={String(parseInt(lastMonthTotal) > 1000 ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M` : `${lastMonthTotal} K` )} />
                   <Card placeholder="Part this month" text={String(getPartsTotal(getFilteredOrders(5, 7)))} />
-                  <div className="stat place-items-center">
-                      <div className="stat-title">Parts Made This Month</div>
-                      <div className="stat-value">{ getPartsTotal(getFilteredOrders(5, 7)) }</div>
-                  </div>
-              </div>
               <DoughnutChart ordersData={ getMoneyOnCustomer() } />
               <div className="stats stats-vertical shadow">
                   <div className="stat place-items-center">
