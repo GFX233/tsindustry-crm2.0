@@ -99,15 +99,14 @@ const Dashboard: NextPage = () => {
         <title>DASHBOARD: TS INDUSTRY SYSTEMS</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="w-full h-screen p-4 gap-4">
+      <div className="p-4 gap-4 flex flex-col max-w-3xl mx-auto">
         <Input
           name="Datum:"
           type="month"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <div className="divider my-10">THIS MONTH STATS</div>
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-center gap-4">
           <Card
             placeholder="This Month Total"
             text={String(
@@ -128,22 +127,24 @@ const Dashboard: NextPage = () => {
             placeholder="Part this month"
             text={String(getPartsTotal(getFilteredOrders(5, 7)))}
           />
-          <DoughnutChart ordersData={getMoneyOnCustomer()} />
-          <div className="stats stats-vertical shadow">
-            <Card
-              placeholder="This Year Total"
-              text={String(
-                parseInt(thisYearTotal) > 1000
-                  ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M`
-                  : `${thisYearTotal} K`
-              )}
-            />
-            <Card placeholder="Celkem dílů tento rok" text={String(getPartsTotal(getFilteredOrders(0, 4)))} />
-            </div>
+          <Card
+            placeholder="This Year Total"
+            text={String(
+              parseInt(thisYearTotal) > 1000
+                ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M`
+                : `${thisYearTotal} K`
+            )}
+          />
+          <Card
+            placeholder="Celkem dílů tento rok"
+            text={String(getPartsTotal(getFilteredOrders(0, 4)))}
+          />
           </div>
-        </div>
-        <div className="divider my-10">MONTHLY BREAKDOWN</div>
-        <LineChart orderData={getMonthlyPerformance()} />
+          <div className="flex flex-col justify-center p-8 gap-4">
+            <DoughnutChart ordersData={getMoneyOnCustomer()} />
+            <LineChart orderData={getMonthlyPerformance()} />
+          </div>
+      </div>
     </>
   );
 };
