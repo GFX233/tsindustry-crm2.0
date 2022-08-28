@@ -107,6 +107,7 @@ const Dashboard: NextPage = () => {
           onChange={(e) => setDate(e.target.value)}
         />
         <div className="flex flex-row justify-center gap-4">
+          <div className="flex flex-col">
           <Card
             placeholder="This Month Total"
             text={String(
@@ -127,6 +128,9 @@ const Dashboard: NextPage = () => {
             placeholder="Part this month"
             text={String(getPartsTotal(getFilteredOrders(5, 7)))}
           />
+          </div>
+          <DoughnutChart ordersData={getMoneyOnCustomer()} />
+          <div className="flex flex-col">
           <Card
             placeholder="This Year Total"
             text={String(
@@ -140,8 +144,9 @@ const Dashboard: NextPage = () => {
             text={String(getPartsTotal(getFilteredOrders(0, 4)))}
           />
           </div>
+          </div>
           <div className="flex flex-col justify-center p-8 gap-4">
-            <DoughnutChart ordersData={getMoneyOnCustomer()} />
+            
             <LineChart orderData={getMonthlyPerformance()} />
           </div>
       </div>
