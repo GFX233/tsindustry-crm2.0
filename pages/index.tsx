@@ -92,37 +92,37 @@ const Orders: React.FC = () => {
             </caption>
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th></th>
-                <th>
+                <th className="w-8">#</th>
+                <th className="w-24">
                   <label className="flex gap-2 items-center justify-center">
                     Date <SortingButton onClick={handleSort} withWhat="date" />
                   </label>
                 </th>
-                <th>
+                <th className="w-36">
                   <label className="flex gap-2 items-center justify-center">
                     Customer{" "}
                     <SortingButton onClick={handleSort} withWhat="customer" />
                   </label>
                 </th>
-                <th>
+                <th className="w-24">
                   <label className="flex gap-2 items-center justify-center">
                     Order{" "}
                     <SortingButton onClick={handleSort} withWhat="orderNum" />
                   </label>
                 </th>
-                <th>
+                <th className="w-72">
                   <label className="flex gap-2 items-center justify-center">
                     Part name{" "}
                     <SortingButton onClick={handleSort} withWhat="partName" />
                   </label>
                 </th>
-                <th className="text-center">
+                <th className="text-center w-20">
                   <label className="flex gap-2 items-center justify-center">
                     Count{" "}
                     <SortingButton onClick={handleSort} withWhat="partCount" />
                   </label>
                 </th>
-                <th>
+                <th className="w-24">
                   <label className="flex gap-2 items-center justify-center">
                     Price{" "}
                     <SortingButton onClick={handleSort} withWhat="price" />
