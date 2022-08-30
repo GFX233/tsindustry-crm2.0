@@ -23,3 +23,15 @@ export type Data = {
   customers: Customer[];
   orders: Order[]
 }
+
+export type OrderNoId = {
+  customer: string;
+  date: string;
+  op1: string;
+  op2: string;
+  orderNum: string;
+  partCount: string;
+  partName: string;
+  price: string;
+  time: string;
+};
