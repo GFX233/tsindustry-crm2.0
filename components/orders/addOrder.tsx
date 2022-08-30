@@ -7,6 +7,7 @@ import Input from "../input";
 import Button from "../button";
 import Select from "../select";
 import Message from "../message";
+import Counter from "./counter";
 
 interface AddOrderProps {
   customers: Customer[];
@@ -149,20 +150,7 @@ const AddOrder: React.FC<AddOrderProps> = ({
             onChange={(e) => handleOrderChange("op2", e)}
             onKeyDown={(e) => handleKeyDown(e)}
           />
-          <input
-            type="text"
-            readOnly
-            value={
-              parseInt(order.partCount) * parseInt(order.op1) * parseInt(order.op2) > 0
-                ? `${(
-                    ((parseInt(order.op1) + parseInt(order.op2)) *
-                      parseInt(order.partCount)) /
-                    60
-                  ).toFixed(2)} H`
-                : 0
-            }
-            className="mb-4 block px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          />
+          <Counter order={order} />
           <Input
             name="Čas strojní celkem:"
             type="text"
