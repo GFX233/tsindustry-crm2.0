@@ -15,11 +15,6 @@ const Counter: React.JSXElementConstructor<ICounterProps> = ({order}) => {
     ).toFixed(1)
   : "0"
   const multipliedValue: string = (parseFloat(timeValue) * parseFloat(multi)).toFixed(1)
-  console.log(`${multi} multi`)
-  console.log(`${timeValue} timeValue`)
-  console.log(parseInt(timeValue))
-
-
 
   return (
     <div className="flex flex-row">
