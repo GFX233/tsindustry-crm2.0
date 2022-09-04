@@ -35,3 +35,10 @@ export type OrderNoId = {
   price: string;
   time: string;
 };
+
+export type Todo = {
+  subject: string;
+  description: string;
+  state: "created" | "active" | "done";
+  date: string;
+}
