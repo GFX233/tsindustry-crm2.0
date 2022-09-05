@@ -1,10 +1,22 @@
 import { NextPage } from "next"
+import Head from 'next/head'
+import SidebarTodo from "../components/todo/sidebar-todo"
+import type { Todo } from "../utils/types/types"
 
 const Todo: NextPage = () => {
   return (
-    <div>
-      <p>TODO</p>
-    </div>
+    <>
+      <Head>
+        <title>TODO: TS INDUSTRY SYSTEMS</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
+        <SidebarTodo />
+        <div className="shadow-md sm:rounded-lg overflow-x-auto relative w-full">
+          
+        </div>
+      </div>
+    </>
   )
 }
 
