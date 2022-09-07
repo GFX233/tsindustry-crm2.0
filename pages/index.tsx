@@ -71,7 +71,7 @@ const Orders: React.FC = () => {
         <title>ORDERS: TS INDUSTRY SYSTEMS</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div className="flex flex-row mt-4 justify-center">
+      <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
         <SidebarIndex
           orders={orders}
           customers={customers}
@@ -80,7 +80,7 @@ const Orders: React.FC = () => {
           setDisplayList={setDisplayList}
           setCustomers={setCustomers}
         />
-        <div className="shadow-md sm:rounded-lg max-w-5xl overflow-x-auto relative">
+        <div className="shadow-md sm:rounded-lg w-full overflow-x-auto relative">
           <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
               List zakázek
