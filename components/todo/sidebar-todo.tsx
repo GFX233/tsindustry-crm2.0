@@ -5,11 +5,12 @@ import Select from "../select";
 import type { Todo } from "../../utils/types/types"
 
 interface SidebarProps {
-
+  todos: Todo[]
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
 }
 
 
-const SidebarTodo: React.FC<SidebarProps> = () => {
+const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
   const [todo, setTodo] = useState<Todo>({subject: "", description: "", state: "created", date: new Date().toISOString().substring(0, 7)})
   const stateSelect = useRef() as MutableRefObject<HTMLSelectElement>;
 
