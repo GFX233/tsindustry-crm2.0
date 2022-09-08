@@ -3,6 +3,7 @@ import Dropdown from "../dropdown";
 import Input from "../input";
 import Select from "../select";
 import type { Todo } from "../../utils/types/types"
+import Button from "../button";
 
 interface SidebarProps {
   todos: Todo[]
@@ -16,6 +17,10 @@ const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
 
   const handleTodoChange = (key: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setTodo({...todo, [key]: e.target.value})
+  }
+
+  const addTodo = () => {
+    
   }
 
   return (
@@ -42,6 +47,7 @@ const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
               onChange={(e) => handleTodoChange("customer", e)}
               options={["Created", "Active", "Done"]}
             />
+            <Button name="Přidej Todo" onClick={addTodo} />
           </ul>
         </Dropdown>
       </div>
