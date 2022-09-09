@@ -20,7 +20,7 @@ const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
   }
 
   const addTodo = () => {
-    
+    setTodos([...todos, todo])
   }
 
   return (
