@@ -11,7 +11,7 @@ interface SidebarProps {
 }
 
 
-const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
+const SidebarTodo: React.FC<SidebarProps> = ({todos, setTodos}) => {
   const [todo, setTodo] = useState<Todo>({subject: "", description: "", state: "created", date: new Date().toISOString().substring(0, 7)})
   const stateSelect = useRef() as MutableRefObject<HTMLSelectElement>;
 
@@ -21,11 +21,12 @@ const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
 
   const addTodo = () => {
     setTodos([...todos, todo])
+    setTodo({subject: "", description: "", state: "created", date: new Date().toISOString().substring(0, 7)})
   }
 
   return (
     <div className="w-64" aria-label="Sidebar">
-      <div className="py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full">
+      <div className="py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full shadow-xl">
         <Dropdown name="Vytvoř Todo" icon="/search.svg">
           <ul className="flex flex-col mt-2">
             <Input
@@ -44,7 +45,7 @@ const SidebarTodo: React.FC<SidebarProps> = (todos, setTodos) => {
               referer={stateSelect}
               name="Stav"
               value={todo.state}
-              onChange={(e) => handleTodoChange("customer", e)}
+              onChange={(e) => handleTodoChange("state", e)}
               options={["Created", "Active", "Done"]}
             />
             <Button name="Přidej Todo" onClick={addTodo} />
