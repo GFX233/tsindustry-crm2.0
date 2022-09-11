@@ -2,12 +2,12 @@
 interface TodoProps{
   subject: string;
   description: string;
-  active: "created" | "active" | "done"; 
+  state: "created" | "active" | "done"; 
   date: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const TodoCard: React.FC<TodoProps> = ({subject, description, active, date, onClick}) => {
+const TodoCard: React.FC<TodoProps> = ({subject, description, state, date, onClick}) => {
   return (
     <div className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <h5 className="font-normal text-gray-700 dark:text-gray-400">{subject}</h5>
