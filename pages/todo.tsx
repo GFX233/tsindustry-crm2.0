@@ -7,6 +7,7 @@ import TodoCard from "../components/todo/todoCard"
 
 const Todo: NextPage = () => {
     const [todos, setTodos] = useState<Todo[]>([])
+    console.log(todos)
   return (
     <>
       <Head>
