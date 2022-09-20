@@ -14,12 +14,14 @@ interface UpdateTodoProps{
   text: string
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   setToggleUpdate: React.Dispatch<React.SetStateAction<boolean>>
+  todo: Todo
 }
 
 
-const UpdateOrder: React.FC<UpdateTodoProps> = ({subject, description, state, date, text, setToggleUpdate}) => {
+const UpdateOrder: React.FC<UpdateTodoProps> = ({subject, description, state, todo, date, text, setToggleUpdate}) => {
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false)
+  const [todoData, setTodoData] = useState<Todo>(todo)
 
   return (
     <>
