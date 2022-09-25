@@ -2,27 +2,41 @@ import React, { useState, useRef, MutableRefObject } from "react";
 import Dropdown from "../dropdown";
 import Input from "../input";
 import Select from "../select";
-import type { Todo } from "../../utils/types/types"
+import type { Todo } from "../../utils/types/types";
 import Button from "../button";
+import { addData } from "../../utils/firebase/firebase-db";
 
 interface SidebarProps {
-  todos: Todo[]
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+  todos: Todo[];
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-
-const SidebarTodo: React.FC<SidebarProps> = ({todos, setTodos}) => {
-  const [todo, setTodo] = useState<Todo>({subject: "", description: "", state: "created", date: new Date().toISOString().substring(0, 7)})
+const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
+  const [todo, setTodo] = useState<Todo>({
+    subject: "",
+    description: "",
+    state: "created",
+    date: new Date().toISOString().substring(0, 7),
+  });
   const stateSelect = useRef() as MutableRefObject<HTMLSelectElement>;
 
-  const handleTodoChange = (key: string, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setTodo({...todo, [key]: e.target.value})
-  }
+  const handleTodoChange = (
+    key: string,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setTodo({ ...todo, [key]: e.target.value });
+  };
 
   const addTodo = () => {
-    setTodos([...todos, todo])
-    setTodo({subject: "", description: "", state: "created", date: new Date().toISOString().substring(0, 7)})
-  }
+    setTodos([...todos, todo]);
+    setTodo({
+      subject: "",
+      description: "",
+      state: "created",
+      date: new Date().toISOString().substring(0, 7),
+    });
+    addData("todo", todo)
+  };
 
   return (
     <div className="w-64" aria-label="Sidebar">
