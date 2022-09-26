@@ -36,6 +36,7 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
       date: new Date().toISOString().substring(0, 7),
     });
     addData("todo", todo)
+    console.log("created")
   };
 
   return (
