@@ -3,8 +3,8 @@ import { DataContext } from "./dataContext";
 import firebase from "firebase/compat/app";
 import Login from "../pages/login";
 import { auth } from "../utils/firebase/firebase";
-import { getOrders, getCustomers } from "../utils/firebase/firebase-db";
-import type { Order, Customer, Data } from "../utils/types/types";
+import { getOrders, getCustomers, getTodos } from "../utils/firebase/firebase-db";
+import type { Order, Customer, Data, Todo } from "../utils/types/types";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,8 +16,9 @@ export const DataProvider: React.FC<LayoutProps> = ({
   const [user, setUser] = useState<firebase.User | null>(null);
   const [orders, setOrders] = useState<Order[]>([])
   const [customers, setCustomers] = useState<Customer[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
   console.log(customers);
-  const data: Data = { user, customers, orders };
+  const data: Data = { user, customers, orders, todos };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
@@ -30,8 +31,10 @@ export const DataProvider: React.FC<LayoutProps> = ({
     const getData = async () => {
       const orders = await getOrders();
       const customers = await getCustomers();
+      const todos = await getTodos()
       setOrders(orders)
       setCustomers(customers)
+      setTodos(todos)
     }
     getData()
   }, [])
@@ -46,8 +49,9 @@ export const DataProvider: React.FC<LayoutProps> = ({
 export async function getServerSideProps() {
   const orders = await getOrders();
   const customers = await getCustomers();
+  const todos = await getTodos()
 
-  return { props: { customers, orders } };
+  return { props: { customers, orders, todos } };
 }
 
 export default DataProvider
