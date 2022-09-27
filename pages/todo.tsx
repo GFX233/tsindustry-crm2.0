@@ -1,13 +1,20 @@
 import { NextPage } from "next"
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Head from 'next/head'
 import SidebarTodo from "../components/todo/sidebar-todo"
 import type { Todo } from "../utils/types/types"
 import TodoCard from "../components/todo/todoCard"
+import { DataContext } from "../context/dataContext";
 
 const Todo: NextPage = () => {
-    const [todos, setTodos] = useState<Todo[]>([])
+  const data = useContext(DataContext)
+  const [todos, setTodos] = useState<Todo[]>([])
     console.log(todos)
+
+  useEffect(() => {
+    setTodos(data?.todos)
+  },[])
+
   return (
     <>
       <Head>
