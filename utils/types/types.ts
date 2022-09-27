@@ -22,6 +22,7 @@ export type Data = {
   user: firebase.User | null
   customers: Customer[];
   orders: Order[]
+  todos: Todo[]
 }
 
 export type OrderNoId = {
@@ -41,4 +42,5 @@ export type Todo = {
   description: string;
   state: "created" | "active" | "done";
   date: string;
+  id?: string
 }
