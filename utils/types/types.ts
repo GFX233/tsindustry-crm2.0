@@ -40,7 +40,7 @@ export type OrderNoId = {
 export type Todo = {
   subject: string;
   description: string;
-  state: "created" | "active" | "done";
+  state: "CREATED" | "ACTIVE" | "DONE";
   date: string;
   id?: string
 }
