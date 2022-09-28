@@ -1,6 +1,6 @@
 import { firebaseApp } from "./firebase";
 import { getFirestore, collection, addDoc, getDocs, query, deleteDoc, doc, getDoc, setDoc, DocumentReference } from "firebase/firestore"
-import type { Order, Customer } from "../types/types";
+import type { Order, Customer, Todo } from "../types/types";
 
 
 // Initialize Firebase
@@ -55,6 +55,17 @@ export const getCustomers: () => Promise<Customer[]> = async () => {
         const customer: Customer = doc.data() as Customer
         data.push(customer)
     })
+    return data
+}
+
+export const getTodos: () => Promise<Todo[]> = async () => {
+    const dataQuery = await getDocs(query(collection(db, "todos")))
+    const data: Todo[] = []
+    dataQuery.docs.forEach(doc => {
+        const todo: Todo = {...doc.data(), id: doc.id} as Todo
+        data.push(todo)
+    })
+    console.log(data)
     return data
 }
 
