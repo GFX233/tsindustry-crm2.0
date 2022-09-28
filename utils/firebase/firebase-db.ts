@@ -59,7 +59,7 @@ export const getCustomers: () => Promise<Customer[]> = async () => {
 }
 
 export const getTodos: () => Promise<Todo[]> = async () => {
-    const dataQuery = await getDocs(query(collection(db, "todos")))
+    const dataQuery = await getDocs(query(collection(db, "todo")))
     const data: Todo[] = []
     dataQuery.docs.forEach(doc => {
         const todo: Todo = {...doc.data(), id: doc.id} as Todo
