@@ -10,6 +10,7 @@ const Todo: NextPage = () => {
   const data = useContext(DataContext)
   const [todos, setTodos] = useState<Todo[]>([])
     console.log(todos)
+    console.log(data)
 
   useEffect(() => {
     setTodos(data?.todos)
@@ -24,7 +25,7 @@ const Todo: NextPage = () => {
       <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
         <SidebarTodo todos={todos} setTodos={setTodos}/>
         <div className="shadow-xl sm:rounded-lg overflow-x-auto relative w-full">
-          {todos.map(todo => <TodoCard subject={todo.subject} description={todo.description} state={todo.state} date={todo.date} />)}
+          {todos.map(todo => <TodoCard key={todo.id} subject={todo.subject} description={todo.description} state={todo.state} date={todo.date} />)}
         </div>
       </div>
     </>
