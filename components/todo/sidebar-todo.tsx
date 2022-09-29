@@ -15,8 +15,8 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   const [todo, setTodo] = useState<Todo>({
     subject: "",
     description: "",
-    state: "created",
-    date: new Date().toISOString().substring(0, 7),
+    state: "CREATED",
+    date: new Date().toISOString().substring(0, 10),
   });
   const stateSelect = useRef() as MutableRefObject<HTMLSelectElement>;
 
@@ -28,11 +28,11 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   };
 
   const addTodo = () => {
-    setTodos([...todos, todo]);
+    setTodos([...todos, {subject: todo.subject, description: todo.date + " " + todo.description , state: todo.state, date: todo.date }]);
     setTodo({
       subject: "",
       description: "",
-      state: "created",
+      state: "CREATED",
       date: new Date().toISOString().substring(0, 7),
     });
     addData("todo", todo)
