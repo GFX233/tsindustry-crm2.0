@@ -5,13 +5,15 @@ import SidebarTodo from "../components/todo/sidebar-todo"
 import type { Todo } from "../utils/types/types"
 import TodoCard from "../components/todo/todoCard"
 import { DataContext } from "../context/dataContext";
+import UpdateTodo from "../components/todo/updateTodo"
 
 const Todo: NextPage = () => {
   const data = useContext(DataContext)
   const [todos, setTodos] = useState<Todo[]>([])
-    console.log(todos)
-    console.log(data)
+  const [toggleUpdate, setToggleUpdate] = useState<boolean>(false)
 
+  console.log(toggleUpdate)
+  
   useEffect(() => {
     setTodos(data?.todos)
   },[])
@@ -25,8 +27,9 @@ const Todo: NextPage = () => {
       <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
         <SidebarTodo todos={todos} setTodos={setTodos}/>
         <div className="shadow-xl sm:rounded-lg overflow-x-auto relative w-full">
-          {todos.map(todo => <TodoCard key={todo.id} subject={todo.subject} description={todo.description} state={todo.state} date={todo.date} />)}
+          {todos.map(todo => <TodoCard key={todo.id} subject={todo.subject} description={todo.description} state={todo.state} date={todo.date} setToggleUpdate={setToggleUpdate} />)}
         </div>
+        {toggleUpdate && <UpdateTodo />}
       </div>
     </>
   )
