@@ -4,13 +4,13 @@ interface TodoProps{
   description: string;
   state: "CREATED" | "ACTIVE" | "DONE"; 
   date: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  setToggleUpdate: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TodoCard: React.FC<TodoProps> = ({subject, description, state, date, onClick}) => {
+const TodoCard: React.FC<TodoProps> = ({subject, description, state, date, setToggleUpdate}) => {
   return (
-    <div className="block p-4 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-      <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Předmět: {subject}</div>
+    <button onClick={() => setToggleUpdate(true)} className="block p-4 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <div className="text-xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">Předmět: {subject}</div>
       <h5 className="font-normal text-gray-700 dark:text-gray-400">{description}</h5>
       <div className="flex fex-row justify-between mt-4 items-center">
         <div className="flex flex-row gap-4 items-center">
@@ -21,8 +21,7 @@ const TodoCard: React.FC<TodoProps> = ({subject, description, state, date, onCli
         </div>
         <p className="font-normal text-sm text-gray-700">Created at: {date}</p>
       </div>
-    </div>
-
+    </button>
   )
 }
 
