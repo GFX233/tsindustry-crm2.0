@@ -28,12 +28,12 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   };
 
   const addTodo = () => {
-    setTodos([...todos, {subject: todo.subject, description: todo.date + " " + todo.description , state: todo.state, date: todo.date }]);
+    setTodos([...todos, {...todo, description: todo.date + " - " + todo.description}]);
     setTodo({
       subject: "",
       description: "",
       state: "CREATED",
-      date: new Date().toISOString().substring(0, 7),
+      date: new Date().toISOString().substring(0, 10),
     });
     addData("todo", todo)
     console.log("created")
@@ -42,7 +42,7 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   return (
     <div className="w-64" aria-label="Sidebar">
       <div className="py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full shadow-xl">
-        <Dropdown name="Vytvoř Todo" icon="/search.svg">
+        <Dropdown name="Vytvoř úkol" icon="/search.svg">
           <ul className="flex flex-col mt-2">
             <Input
               name="Předmět:"
@@ -63,7 +63,7 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
               onChange={(e) => handleTodoChange("state", e)}
               options={["Created", "Active", "Done"]}
             />
-            <Button name="Přidej Todo" onClick={addTodo} />
+            <Button name="Přidej úkol" onClick={addTodo} />
           </ul>
         </Dropdown>
       </div>
