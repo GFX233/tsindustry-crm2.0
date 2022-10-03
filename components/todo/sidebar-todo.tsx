@@ -2,7 +2,7 @@ import React, { useState, useRef, MutableRefObject } from "react";
 import Dropdown from "../dropdown";
 import Input from "../input";
 import Select from "../select";
-import type { Todo } from "../../utils/types/types";
+import type { CreateTodo, Todo } from "../../utils/types/types";
 import Button from "../button";
 import { addData } from "../../utils/firebase/firebase-db";
 
@@ -26,17 +26,16 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   ) => {
     setTodo({ ...todo, [key]: e.target.value });
   };
-
+  
   const addTodo = () => {
-    setTodos([...todos, {...todo, description: todo.date + " - " + todo.description}]);
+    setTodos([...todos, {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
     setTodo({
       subject: "",
       description: "",
       state: "CREATED",
       date: new Date().toISOString().substring(0, 10),
     });
-    addData("todo", todo)
-    console.log("created")
+    addData("todo", {...todos.at(-1)})
   };
 
   return (
