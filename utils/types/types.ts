@@ -19,11 +19,11 @@ export type Customer = {
 };
 
 export type Data = {
-  user: firebase.User | null
+  user: firebase.User | null;
   customers: Customer[];
-  orders: Order[]
-  todos: Todo[]
-}
+  orders: Order[];
+  todos: Todo[];
+};
 
 export type OrderNoId = {
   customer: string;
@@ -37,10 +37,23 @@ export type OrderNoId = {
   time: string;
 };
 
+export type CreateTodo = {
+  subject: string;
+  description: string;
+  state: "CREATED" | "ACTIVE" | "DONE";
+  date: string;
+  id?: string;
+};
+
 export type Todo = {
   subject: string;
   description: string;
   state: "CREATED" | "ACTIVE" | "DONE";
   date: string;
-  id?: string
+  id: string;
 }
+
+export type Content = {
+  content: string;
+  date: string;
+};
