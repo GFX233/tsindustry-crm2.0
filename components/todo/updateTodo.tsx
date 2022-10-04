@@ -1,5 +1,5 @@
-import type { Todo } from "../../utils/types/types";
-import { useState, useRef, MutableRefObject } from "react";
+import type { Content, Todo } from "../../utils/types/types";
+import React, { useState, useRef, MutableRefObject } from "react";
 import { editData, deleteItem } from "../../utils/firebase/firebase-db";
 import Input from "../input";
 import Select from "../select";
@@ -10,20 +10,30 @@ interface IUpdateTodoProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   setToggleUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   todo: Todo;
+  todos: Todo[]
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
 }
 
-const UpdateTodo: React.FC<IUpdateTodoProps> = ({
-  todo,
-  setToggleUpdate,
-}) => {
-  const [success, setSuccess] = useState(false);
-  const [failure, setFailure] = useState(false);
+const UpdateTodo: React.FC<IUpdateTodoProps> = ({ todo, setToggleUpdate, todos, setTodos }) => {
+  const [success, setSuccess] = useState<boolean>(false);
+  const [failure, setFailure] = useState<boolean>(false);
+  const [newContent, setNewContent] = useState<Content>({
+    date: new Date().toISOString().substring(0, 10),
+    content: ""
+  });
+  const [state, setState] = useState<string>(todo.state)
+
+  const handleUpdate = () => {
+    const newList = todos.filter((item) => item.id !== todo.id)
+    setTodos([...newList, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])}])
+    editData("todo", todo.id, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])})
+  }
 
   return (
     <>
-      <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 opacity-10"></div>
+      <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 opacity-50"></div>
       <div className="fixed top-0 inset-x-0 h-full flex justify-center items-center">
-        <div className="relative bg-white p-4 rounded-lg flex flex-col w-96">
+        <div className="relative bg-white p-4 rounded-lg flex flex-col w-1/2">
           <div className="flex justify-between items-start rounded-t border-b dark:border-gray-600 mb-2">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               {todo.subject} z {todo.date}
@@ -48,14 +58,37 @@ const UpdateTodo: React.FC<IUpdateTodoProps> = ({
               </svg>
             </button>
           </div>
-
-          <Button name="Upravit úkol" />
+          <h5 className="font-normal text-gray-700 dark:text-gray-400">
+            {JSON.parse(todo.description).map((item: Content) => (
+              <div key={item.content.substring(0,5)} className="flex flex-row gap-2">
+                <p className="font-semibold">{`${item.date} -`}</p>
+                <p>{item.content}</p>
+              </div>
+            ))}
+          </h5>
+          <div className="relative z-0 mt-4 w-full">
+            <textarea
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              onChange={(e) => setNewContent({...newContent, content: e.target.value})}
+              value={newContent.content}
+            />
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Přidej koment:
+            </label>
+          </div>
+          <Select
+            name="Zákazník"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            options={["CREATED", "ACTIVE" ,"DONE"]}
+          />
+          <Button name="Upravit úkol" onClick={() => handleUpdate()} />
           <Button name="Smazat úkol" />
         </div>
         {success && (
-          <Message text="Zakázka úspěšně upravena/odstraněna!" success={true} />
+          <Message text="Úkol úspěšně upraven/odstraněn!" success={true} />
         )}
-        {failure && <Message text="Zakázka nenalezena!" alert={true} />}
+        {failure && <Message text="Úkol nenalezen!" alert={true} />}
       </div>
     </>
   );
