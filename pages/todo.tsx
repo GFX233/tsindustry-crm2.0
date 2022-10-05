@@ -11,12 +11,22 @@ const Todo: NextPage = () => {
   const data = useContext(DataContext)
   const [todos, setTodos] = useState<Todo[]>([])
   const [toggleUpdate, setToggleUpdate] = useState<boolean>(false)
+  const [todoInfo, setTodoInfo] = useState<Todo>({
+    subject: "",
+    description: "",
+    state: "CREATED",
+    date: "",
+    id: ""
+  })
 
-  console.log(toggleUpdate)
-  
   useEffect(() => {
     setTodos(data?.todos)
   },[])
+
+  const handleClick = (todo: Todo) => {
+    setTodoInfo(todo)
+    setToggleUpdate(true)
+  }
 
   return (
     <>
@@ -27,9 +37,9 @@ const Todo: NextPage = () => {
       <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
         <SidebarTodo todos={todos} setTodos={setTodos}/>
         <div className="shadow-xl sm:rounded-lg overflow-x-auto relative w-full">
-          {todos.map(todo => <TodoCard key={todo.id} subject={todo.subject} description={todo.description} state={todo.state} date={todo.date} setToggleUpdate={setToggleUpdate} />)}
+          {todos.length > 0 && todos.map(todo => <TodoCard key={todo.id} todo={todo} handleClick={handleClick} />)}
         </div>
-        {toggleUpdate && <UpdateTodo />}
+        {toggleUpdate && <UpdateTodo todo={todoInfo} setToggleUpdate={setToggleUpdate} todos={todos} setTodos={setTodos} />}
       </div>
     </>
   )
