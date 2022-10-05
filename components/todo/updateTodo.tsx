@@ -2,7 +2,7 @@ import type { Content, Todo } from "../../utils/types/types";
 import React, { useState, useRef, MutableRefObject } from "react";
 import { editData, deleteItem } from "../../utils/firebase/firebase-db";
 import Input from "../input";
-import Select from "../select";
+import Select from "../selectTodo";
 import Button from "../button";
 import Message from "../message";
 
@@ -17,17 +17,53 @@ interface IUpdateTodoProps {
 const UpdateTodo: React.FC<IUpdateTodoProps> = ({ todo, setToggleUpdate, todos, setTodos }) => {
   const [success, setSuccess] = useState<boolean>(false);
   const [failure, setFailure] = useState<boolean>(false);
+  const [noContent, setNoContent] = useState<boolean>(false)
   const [newContent, setNewContent] = useState<Content>({
     date: new Date().toISOString().substring(0, 10),
     content: ""
   });
-  const [state, setState] = useState<string>(todo.state)
-
+  const [state, setState] = useState(todo.state)
+  console.log(state)
   const handleUpdate = () => {
-    const newList = todos.filter((item) => item.id !== todo.id)
-    setTodos([...newList, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])}])
-    editData("todo", todo.id, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])})
+    if (newContent.content !== "" || todo.state !== state ) {
+      const newList = todos.filter((item) => item.id !== todo.id)
+      setTodos([...newList, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ]), state: state}])
+      editData("todo", todo.id, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])})
+      setNewContent({date: new Date().toISOString().substring(0, 10),
+        content: ""})
+      setSuccess(true)
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+    } else {
+      setNoContent(true)
+      setTimeout(() => {
+        setNoContent(false);
+      }, 3000);
+    }
   }
+
+  const handleDelete = () => {
+    const newList = todos.filter((item) => item.id !== todo.id)
+    setTodos(newList)
+    setNewContent({date: new Date().toISOString().substring(0, 10),
+      content: ""})
+    setTimeout(() => {
+      setSuccess(false);
+      setToggleUpdate(false);
+    }, 1500);
+  }
+
+  type StateType = "CREATED" | "ACTIVE" | "DONE";
+  interface StateOptionType {
+    value: StateType;
+  }
+  const stateOptions: StateOptionType[] = [
+    { value: "CREATED" },
+    { value: "ACTIVE" },
+    { value: "DONE" }
+  ];
+
 
   return (
     <>
@@ -59,8 +95,8 @@ const UpdateTodo: React.FC<IUpdateTodoProps> = ({ todo, setToggleUpdate, todos, 
             </button>
           </div>
           <h5 className="font-normal text-gray-700 dark:text-gray-400">
-            {JSON.parse(todo.description).map((item: Content) => (
-              <div key={item.content.substring(0,5)} className="flex flex-row gap-2">
+            {JSON.parse(todo.description).map((item: Content, idx: string) => (
+              <div key={idx} className="flex flex-row gap-2">
                 <p className="font-semibold">{`${item.date} -`}</p>
                 <p>{item.content}</p>
               </div>
@@ -77,18 +113,18 @@ const UpdateTodo: React.FC<IUpdateTodoProps> = ({ todo, setToggleUpdate, todos, 
             </label>
           </div>
           <Select
-            name="Zákazník"
             value={state}
-            onChange={(e) => setState(e.target.value)}
-            options={["CREATED", "ACTIVE" ,"DONE"]}
+            onChange={setState}
+            options={stateOptions}
           />
           <Button name="Upravit úkol" onClick={() => handleUpdate()} />
-          <Button name="Smazat úkol" />
+          <Button name="Smazat úkol" onClick={() => handleDelete()}/>
         </div>
         {success && (
           <Message text="Úkol úspěšně upraven/odstraněn!" success={true} />
         )}
         {failure && <Message text="Úkol nenalezen!" alert={true} />}
+        {noContent && <Message text="Pro úpravu zadej obsah!" alert={true} />}
       </div>
     </>
   );
