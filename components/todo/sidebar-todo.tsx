@@ -13,6 +13,7 @@ interface SidebarProps {
 
 const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   const [todo, setTodo] = useState<Todo>({
+    id: "",
     subject: "",
     description: "",
     state: "CREATED",
@@ -30,6 +31,7 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   const addTodo = () => {
     setTodos([...todos, {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
     setTodo({
+      id: "",
       subject: "",
       description: "",
       state: "CREATED",
