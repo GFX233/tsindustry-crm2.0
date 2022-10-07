@@ -20,9 +20,9 @@ const TodoCard: React.FC<TodoProps> = ({ todo, handleClick }) => {
           {todo.subject}
         </div>
         <h5 className="font-normal text-gray-700 dark:text-gray-400">
-          {JSON.parse(todo.description).map((item: Content) => (
+          {JSON.parse(todo.description).map((item: Content, index: string) => (
             <div
-              key={item.content.substring(0, 5)}
+              key={index}
               className="flex flex-row gap-2"
             >
               <p className="font-semibold">{`${item.date} -`}</p>
