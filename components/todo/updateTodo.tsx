@@ -1,5 +1,5 @@
 import type { Content, Todo } from "../../utils/types/types";
-import React, { useState, useRef, MutableRefObject } from "react";
+import React, { useState} from "react";
 import { editData, deleteItem } from "../../utils/firebase/firebase-db";
 import Input from "../input";
 import Select from "../selectTodo";
@@ -23,12 +23,12 @@ const UpdateTodo: React.FC<IUpdateTodoProps> = ({ todo, setToggleUpdate, todos, 
     content: ""
   });
   const [state, setState] = useState(todo.state)
-  console.log(state)
+
   const handleUpdate = () => {
     if (newContent.content !== "" || todo.state !== state ) {
       const newList = todos.filter((item) => item.id !== todo.id)
       setTodos([...newList, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ]), state: state}])
-      editData("todo", todo.id, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ])})
+      editData("todo", todo.id, {...todo, description: JSON.stringify([...JSON.parse(todo.description), newContent ]), state: state})
       setNewContent({date: new Date().toISOString().substring(0, 10),
         content: ""})
       setSuccess(true)
