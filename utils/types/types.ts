@@ -53,6 +53,13 @@ export type Todo = {
   id: string;
 }
 
+export type TodoNoID = {
+  subject: string;
+  description: string;
+  state: "CREATED" | "ACTIVE" | "DONE";
+  date: string;
+}
+
 export type Content = {
   content: string;
   date: string;
