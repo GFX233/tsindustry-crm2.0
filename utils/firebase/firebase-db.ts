@@ -10,7 +10,7 @@ export const addData = async (where: string, body: object) => {
     try {
         const docRef = await addDoc(collection(db, where), body)
         console.log("Document added with ID: ", docRef.id)
-        return docRef
+        return docRef.id
     } catch (e) {
         console.error("Error adding doc: ", e)
     }
