@@ -2,18 +2,17 @@ import React, { useState, useRef, MutableRefObject } from "react";
 import Dropdown from "../dropdown";
 import Input from "../input";
 import Select from "../select";
-import type { CreateTodo, Todo } from "../../utils/types/types";
+import type { Todo, TodoNoID } from "../../utils/types/types";
 import Button from "../button";
 import { addData } from "../../utils/firebase/firebase-db";
 
-interface SidebarProps {
+interface ISidebarProps {
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
-  const [todo, setTodo] = useState<Todo>({
-    id: "",
+const SidebarTodo: React.FC<ISidebarProps> = ({ todos, setTodos }) => {
+  const [todo, setTodo] = useState<TodoNoID>({
     subject: "",
     description: "",
     state: "CREATED",
@@ -30,14 +29,13 @@ const SidebarTodo: React.FC<SidebarProps> = ({ todos, setTodos }) => {
   
   const addTodo = () => {
     setTodos([...todos, {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
+    addData("todo", {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])})
     setTodo({
-      id: "",
       subject: "",
       description: "",
       state: "CREATED",
       date: new Date().toISOString().substring(0, 10),
     });
-    addData("todo", {...todos.at(-1)})
   };
 
   return (
