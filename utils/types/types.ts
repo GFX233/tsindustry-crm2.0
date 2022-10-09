@@ -37,14 +37,6 @@ export type OrderNoId = {
   time: string;
 };
 
-export type CreateTodo = {
-  subject: string;
-  description: string;
-  state: "CREATED" | "ACTIVE" | "DONE";
-  date: string;
-  id?: string;
-};
-
 export type Todo = {
   subject: string;
   description: string;
