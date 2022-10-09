@@ -28,8 +28,10 @@ const SidebarTodo: React.FC<ISidebarProps> = ({ todos, setTodos }) => {
   };
   
   const addTodo = () => {
-    setTodos([...todos, {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
-    addData("todo", {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])})
+    const id: Promise<string | undefined> = addData("todo", {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])})
+    if (typeof id === "string") {
+      setTodos([...todos, {...todo, id: id, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
+    } 
     setTodo({
       subject: "",
       description: "",
