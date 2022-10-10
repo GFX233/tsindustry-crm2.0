@@ -1,13 +1,11 @@
-import { SetStateAction } from "react";
 import { Todo, Content } from "../../utils/types/types";
-import UpdateTodo from "./updateTodo";
 
-interface TodoProps {
+interface ITodoProps {
   todo: Todo;
   handleClick: (todo: Todo) => void;
 }
 
-const TodoCard: React.FC<TodoProps> = ({ todo, handleClick }) => {
+const TodoCard: React.FC<ITodoProps> = ({ todo, handleClick }) => {
   console.log(todo.description);
   return (
     <>
