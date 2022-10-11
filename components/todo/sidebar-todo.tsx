@@ -27,8 +27,9 @@ const SidebarTodo: React.FC<ISidebarProps> = ({ todos, setTodos }) => {
     setTodo({ ...todo, [key]: e.target.value });
   };
   
-  const addTodo = () => {
-    const id: Promise<string | undefined> = addData("todo", {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])})
+  const addTodo = async () => {
+    const id: string | undefined = await addData("todo", {...todo, description: JSON.stringify([{date: todo.date, content: todo.description}])})
+    console.log(id)
     if (typeof id === "string") {
       setTodos([...todos, {...todo, id: id, description: JSON.stringify([{date: todo.date, content: todo.description}])}]);
     } 
