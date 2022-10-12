@@ -50,7 +50,7 @@ const TodoCard: React.FC<ITodoProps> = ({ todo, handleClick }) => {
             )}
           </div>
           <p className="font-normal text-sm text-gray-700">
-            Created at: {todo.date}
+            Vytvořeno dne: {todo.date}
           </p>
         </div>
       </button>
