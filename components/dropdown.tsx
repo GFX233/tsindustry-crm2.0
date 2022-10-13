@@ -5,10 +5,11 @@ interface DropdownProps {
   children: React.ReactNode;
   name: string;
   icon?: string
+  dropped?: boolean
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ children, name, icon }) => {
-  const [active, setActive] = useState<boolean>(false);
+const Dropdown: React.FC<DropdownProps> = ({ children, name, icon, dropped = false }) => {
+  const [active, setActive] = useState<boolean>(dropped);
   return (
     <>
       <button
