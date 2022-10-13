@@ -44,7 +44,7 @@ const SidebarTodo: React.FC<ISidebarProps> = ({ todos, setTodos }) => {
   return (
     <div className="w-64" aria-label="Sidebar">
       <div className="py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full shadow-xl">
-        <Dropdown name="Vytvoř úkol" icon="/search.svg">
+        <Dropdown name="Vytvoř úkol" icon="/search.svg" dropped={true}>
           <ul className="flex flex-col mt-2">
             <Input
               name="Předmět:"
