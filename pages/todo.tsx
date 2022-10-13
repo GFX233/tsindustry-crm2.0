@@ -21,7 +21,7 @@ const Todo: NextPage = () => {
 
   useEffect(() => {
     setTodos(data?.todos)
-  },[])
+  },[data])
 
   const handleClick = (todo: Todo) => {
     setTodoInfo(todo)
@@ -37,7 +37,7 @@ const Todo: NextPage = () => {
       <div className="flex flex-row mt-4 justify-center max-w-5xl mx-auto">
         <SidebarTodo todos={todos} setTodos={setTodos}/>
         <div className="shadow-xl sm:rounded-lg overflow-x-auto relative w-full">
-          {todos.length > 0 && todos.map(todo => <TodoCard key={todo.id} todo={todo} handleClick={handleClick} />)}
+          {todos.map(todo => <TodoCard key={todo.id} todo={todo} handleClick={handleClick} />)}
         </div>
         {toggleUpdate && <UpdateTodo todo={todoInfo} setToggleUpdate={setToggleUpdate} todos={todos} setTodos={setTodos} />}
       </div>
