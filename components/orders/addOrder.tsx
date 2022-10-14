@@ -9,13 +9,13 @@ import Select from "../select";
 import Message from "../message";
 import Counter from "./counter";
 
-interface AddOrderProps {
+interface IAddOrderProps {
   customers: Customer[];
   orders: Order[];
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
 }
 
-const AddOrder: React.FC<AddOrderProps> = ({
+const AddOrder: React.FC<IAddOrderProps> = ({
   customers,
   orders,
   setOrders,
@@ -49,10 +49,10 @@ const AddOrder: React.FC<AddOrderProps> = ({
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-        const sum: string = String(parseInt(order.op1) + parseInt(order.op2))
-        setOrder({...order, "op1": sum, "op2": ""})
+      const sum: string = String(parseInt(order.op1) + parseInt(order.op2));
+      setOrder({ ...order, op1: sum, op2: "" });
     }
-}
+  };
 
   const addDoc = async () => {
     if (order.customer === "") {
@@ -62,15 +62,15 @@ const AddOrder: React.FC<AddOrderProps> = ({
       return setFailure(true);
     }
     const idx = customersSelect.current.options.selectedIndex - 1;
-    const docData = await addData("orders", {
+    const id = await addData("orders", {
       ...order,
       price:
         order.price === ""
-          ? String(parseInt(customers[idx].hourRate) * parseInt(order.time))
+          ? String(parseInt(customers[idx].hourRate) * parseFloat(order.time))
           : order.price,
     });
 
-    if (docData) {
+    if (typeof id === "string") {
       setOrder({
         ...order,
         orderNum: "",
@@ -92,9 +92,9 @@ const AddOrder: React.FC<AddOrderProps> = ({
           ...order,
           price:
             order.price === ""
-              ? String(parseInt(customers[idx].hourRate) * parseInt(order.time))
+              ? String(parseInt(customers[idx].hourRate) * parseFloat(order.time))
               : order.price,
-          id: docData.id,
+          id: id,
           partCount: order.partCount,
         },
       ]);
