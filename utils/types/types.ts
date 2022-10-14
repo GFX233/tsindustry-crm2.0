@@ -56,3 +56,10 @@ export type Content = {
   content: string;
   date: string;
 };
+
+export type Filter = {
+  partName: string;
+  orderNum: string;
+  customer: string;
+  date: string;
+}
