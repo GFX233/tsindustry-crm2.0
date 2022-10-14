@@ -1,4 +1,4 @@
-import type { Order, Customer } from "../../utils/types/types";
+import type { Order, Customer, Filter } from "../../utils/types/types";
 import { useState, useEffect } from "react";
 import Dropdown from "../dropdown";
 import Input from "../input";
@@ -6,23 +6,16 @@ import AddOrder from "./addOrder";
 import AddCustomer from "./addCustomer";
 import ExportCSVButton from "../../utils/export/excelReportGenerator";
 
-interface SidebarProps {
+interface ISidebarProps {
   orders: Order[];
   customers: Customer[];
-  displayList: Order[]
+  displayList: Order[];
   setOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setDisplayList: React.Dispatch<React.SetStateAction<Order[]>>;
   setCustomers: React.Dispatch<React.SetStateAction<Customer[]>>;
 }
 
-interface Filter {
-  partName: string;
-  orderNum: string;
-  customer: string;
-  date: string;
-}
-
-const SidebarIndex: React.FC<SidebarProps> = ({
+const SidebarIndex: React.FC<ISidebarProps> = ({
   orders,
   customers,
   displayList,
@@ -107,7 +100,7 @@ const SidebarIndex: React.FC<SidebarProps> = ({
               >
                 <span className="ml-3">Export do PDF</span>
               </a>
-              <ExportCSVButton data={displayList}/>
+              <ExportCSVButton data={displayList} />
             </li>
           </ul>
         </Dropdown>
