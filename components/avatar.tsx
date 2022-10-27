@@ -1,14 +1,17 @@
 import Image from "next/image"
 import { signOut } from "../utils/firebase/firebase-auth"
+import firebase from "firebase/compat/app";
 
 interface AvatarProps{
   src?: string,
   alt?: string,
   name?: string,
   email?: string
+  user: firebase.User | null
 }
 
-const Avatar = ({src, alt, name, email}: AvatarProps): JSX.Element => {
+const Avatar = ({src, alt, name, email, user}: AvatarProps): JSX.Element => {
+  console.log(user)
   return (
     <div className="flex items-center space-x-4">
       <Image 
@@ -18,8 +21,8 @@ const Avatar = ({src, alt, name, email}: AvatarProps): JSX.Element => {
         width={45} 
         height={45}/>
       <div className="space-y-1 font-medium dark:text-white">
-          <button onClick={signOut}><div>{name ? name : "Tomáš Spáčil"}</div></button>
-          <div className="text-sm text-gray-500 dark:text-gray-400">{email ? email : "tomas.spacil@tsindustry.cz"}</div>
+          <button onClick={signOut}><div>{user?.displayName}</div></button>
+          <div className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</div>
       </div>
     </div>
   )
