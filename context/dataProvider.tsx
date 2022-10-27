@@ -51,7 +51,7 @@ export async function getServerSideProps() {
   const customers = await getCustomers();
   const todos = await getTodos()
 
-  return { props: { customers, orders, todos } };
+  return { props: { customers, orders, todos} };
 }
 
 export default DataProvider
