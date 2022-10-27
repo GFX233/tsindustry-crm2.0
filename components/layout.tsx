@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Avatar from "./avatar";
 import PageLink from "./link"
+import { DataContext } from "../context/dataContext";
+import { useContext } from "react"
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout = ({children}: LayoutProps) => {
+  const data = useContext(DataContext)
+
   return (
     <div className="flex flex-col">
       <nav className="flex flex-row w-screen gap-4 items-center justify-between mt-1 px-8 pt-4">
@@ -21,7 +25,7 @@ const Layout = ({children}: LayoutProps) => {
           <PageLink link="/todo" name="Todo" />
           <PageLink link="/rfq" name="RFQ's" />
         </div>
-        <Avatar />
+        <Avatar user={data.user}/>
       </nav>
     <div>
     {children}
