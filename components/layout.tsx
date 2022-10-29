@@ -19,9 +19,9 @@ const Layout = ({children}: LayoutProps) => {
         <p className="font-semibold">TS INDUSTRY SYSTEMS</p>
         </div>
         <div className="flex flex-row gap-4">
-          <PageLink link="/" name="Orders" />
-          <PageLink link="/dashboard" name="Dashboard" />
-          <PageLink link="/planner" name="Planner" />
+          <PageLink link="/" name="Zakázky" />
+          <PageLink link="/dashboard" name="Přehled" />
+          <PageLink link="/planner" name="Plánovač" />
           <PageLink link="/todo" name="Todo" />
           <PageLink link="/rfq" name="RFQ's" />
         </div>
