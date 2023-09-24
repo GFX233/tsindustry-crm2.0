@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NextPage } from "next";
 import { DataContext } from "../context/dataContext";
 import LineChart from "../components/dashboard/lineChart";
@@ -11,6 +11,14 @@ import Card from "../components/card";
 const Dashboard: NextPage = () => {
   const data = useContext(DataContext);
   const [date, setDate] = useState(new Date().toISOString().substring(0, 7));
+
+  /*useEffect(() => {
+    console.log(date)
+    console.log(data)
+  }) */
+
+  console.log(date);
+  console.log(data);
 
   const getFilteredOrders = (from: number, to: number) => {
     const orders = data.orders.filter(
@@ -25,8 +33,8 @@ const Dashboard: NextPage = () => {
     const orders = data.orders.filter(
       (order) =>
         parseInt(order.date.substring(5, 7)) ===
-        parseInt(date.substring(5, 7)) - 1
-    );
+        parseInt(date.substring(5, 7)) - 1 && parseInt(order.date.substring(0, 5)) === parseInt(date.substring(0, 5)
+    ));
     return orders;
   };
 
@@ -54,6 +62,7 @@ const Dashboard: NextPage = () => {
 
   const getMoneyOnCustomer = () => {
     const orders: Order[] = getFilteredOrders(5, 7);
+    console.log(orders)
     const reducedOrders: MoneyOnCustomer[] = orders.reduce(
       (accumulator: MoneyOnCustomer, item: Order) => {
         accumulator[item.customer as keyof MoneyOnCustomer] =
@@ -63,6 +72,8 @@ const Dashboard: NextPage = () => {
       },
       []
     );
+    console.log("reduced ord")
+    console.log(reducedOrders)
     return reducedOrders;
   };
 
@@ -73,13 +84,13 @@ const Dashboard: NextPage = () => {
     });
   };
 
-
   const getMonthlyPerformance = () => {
     const orders: Order[] = getFilteredOrders(5, 7);
     const reducedOrders = orders.reduce((accumulator, item) => {
       accumulator[parseInt(item.date.substring(8, 10))] =
         (accumulator[parseInt(item.date.substring(8, 10))] || 0) +
         parseInt(item.price);
+        console.log(item.date.substring(8, 10))
       return accumulator;
     }, {});
     const values = Object.values(reducedOrders);
@@ -109,47 +120,46 @@ const Dashboard: NextPage = () => {
         />
         <div className="flex flex-row justify-center gap-4">
           <div className="flex flex-col">
-          <Card
-            placeholder="This Month Total"
-            text={String(
-              parseInt(thisMonthTotal) > 1000
-                ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M`
-                : `${thisMonthTotal} K`
-            )}
-          />
-          <Card
-            placeholder="Previous Month"
-            text={String(
-              parseInt(lastMonthTotal) > 1000
-                ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M`
-                : `${lastMonthTotal} K`
-            )}
-          />
-          <Card
-            placeholder="Part this month"
-            text={String(getPartsTotal(getFilteredOrders(5, 7)))}
-          />
+            <Card
+              placeholder="This Month Total"
+              text={String(
+                parseInt(thisMonthTotal) > 1000
+                  ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M`
+                  : `${thisMonthTotal} K`
+              )}
+            />
+            <Card
+              placeholder="Previous Month"
+              text={String(
+                parseInt(lastMonthTotal) > 1000
+                  ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M`
+                  : `${lastMonthTotal} K`
+              )}
+            />
+            <Card
+              placeholder="Part this month"
+              text={String(getPartsTotal(getFilteredOrders(5, 7)))}
+            />
           </div>
           <DoughnutChart ordersData={getMoneyOnCustomer()} />
           <div className="flex flex-col">
-          <Card
-            placeholder="This Year Total"
-            text={String(
-              parseInt(thisYearTotal) > 1000
-                ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M`
-                : `${thisYearTotal} K`
-            )}
-          />
-          <Card
-            placeholder="Celkem dílů tento rok"
-            text={String(getPartsTotal(getFilteredOrders(0, 4)))}
-          />
+            <Card
+              placeholder="This Year Total"
+              text={String(
+                parseInt(thisYearTotal) > 1000
+                  ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M`
+                  : `${thisYearTotal} K`
+              )}
+            />
+            <Card
+              placeholder="Celkem dílů tento rok"
+              text={String(getPartsTotal(getFilteredOrders(0, 4)))}
+            />
           </div>
-          </div>
-          <div className="flex flex-col justify-center p-8 gap-4">
-            
-            <LineChart orderData={getMonthlyPerformance()} />
-          </div>
+        </div>
+        <div className="flex flex-col justify-center p-8 gap-4">
+          <LineChart orderData={getMonthlyPerformance()} />
+        </div>
       </div>
     </>
   );
