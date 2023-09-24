@@ -73,6 +73,7 @@ const Dashboard: NextPage = () => {
     });
   };
 
+
   const getMonthlyPerformance = () => {
     const orders: Order[] = getFilteredOrders(5, 7);
     const reducedOrders = orders.reduce((accumulator, item) => {
