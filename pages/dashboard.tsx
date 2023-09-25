@@ -12,19 +12,14 @@ const Dashboard: NextPage = () => {
   const data = useContext(DataContext);
   const [date, setDate] = useState(new Date().toISOString().substring(0, 7));
 
-  /*useEffect(() => {
-    console.log(date)
-    console.log(data)
-  }) */
-
   console.log(date);
   console.log(data);
 
   const getFilteredOrders = (from: number, to: number) => {
     const orders = data.orders.filter(
       (order) =>
-        parseInt(order.date.substring(from, to)) ===
-        parseInt(date.substring(from, to))
+        order.date.substring(from, to) ===
+        date.substring(from, to)
     );
     return orders;
   };
@@ -45,7 +40,7 @@ const Dashboard: NextPage = () => {
     return total / 1000;
   };
 
-  const thisMonthTotal = getTotal(getFilteredOrders(5, 7)).toFixed(1);
+  const thisMonthTotal = getTotal(getFilteredOrders(0, 7)).toFixed(1);
   const lastMonthTotal = getTotal(getLastMonthOrders()).toFixed(1);
   const thisYearTotal = getTotal(getFilteredOrders(0, 4)).toFixed(2);
 
@@ -57,16 +52,16 @@ const Dashboard: NextPage = () => {
   };
 
   interface MoneyOnCustomer {
-    customer: number;
+    customer?: number;
   }
 
   const getMoneyOnCustomer = () => {
-    const orders: Order[] = getFilteredOrders(5, 7);
+    const orders = getFilteredOrders(0, 7);
     console.log(orders)
-    const reducedOrders: MoneyOnCustomer[] = orders.reduce(
-      (accumulator: MoneyOnCustomer, item: Order) => {
+    const reducedOrders: MoneyOnCustomer[] = orders.reduce<Order[]>(
+      (accumulator, item: Order) => {
         accumulator[item.customer as keyof MoneyOnCustomer] =
-          (parseInt(accumulator[item.customer as keyof Accu]) || 0) +
+          (parseInt(accumulator[item.customer]) || 0) +
           parseInt(item.price);
         return accumulator;
       },
@@ -78,21 +73,22 @@ const Dashboard: NextPage = () => {
   };
 
   const getMoneyOnCustomer2 = (data: Order[]) => {
+    const orders: Order[] = getFilteredOrders(0, 7);
     let customers: { customer: number }[] = [];
     data.forEach((item) => {
       customers = [];
     });
   };
 
+
   const getMonthlyPerformance = () => {
     const orders: Order[] = getFilteredOrders(5, 7);
-    const reducedOrders = orders.reduce((accumulator, item) => {
-      accumulator[parseInt(item.date.substring(8, 10))] =
-        (accumulator[parseInt(item.date.substring(8, 10))] || 0) +
+    const reducedOrders = orders.reduce<Order[]>((accumulator, item) => {
+      accumulator[item.date.substring(8, 10)] =
+        (accumulator[item.date.substring(8, 10)] || 0) +
         parseInt(item.price);
-        console.log(item.date.substring(8, 10))
       return accumulator;
-    }, {});
+    }, []);
     const values = Object.values(reducedOrders);
     const keys = Object.keys(reducedOrders);
     let total = 0;
@@ -121,7 +117,7 @@ const Dashboard: NextPage = () => {
         <div className="flex flex-row justify-center gap-4">
           <div className="flex flex-col">
             <Card
-              placeholder="This Month Total"
+              placeholder="Objem tento měsíc"
               text={String(
                 parseInt(thisMonthTotal) > 1000
                   ? `${(parseInt(thisMonthTotal) / 1000).toFixed(2)} M`
@@ -129,7 +125,7 @@ const Dashboard: NextPage = () => {
               )}
             />
             <Card
-              placeholder="Previous Month"
+              placeholder="Předchozí měsíc"
               text={String(
                 parseInt(lastMonthTotal) > 1000
                   ? `${(parseInt(lastMonthTotal) / 1000).toFixed(2)} M`
@@ -137,14 +133,14 @@ const Dashboard: NextPage = () => {
               )}
             />
             <Card
-              placeholder="Part this month"
-              text={String(getPartsTotal(getFilteredOrders(5, 7)))}
+              placeholder="Dílců v měsíci"
+              text={String(getPartsTotal(getFilteredOrders(0, 7)))}
             />
           </div>
           <DoughnutChart ordersData={getMoneyOnCustomer()} />
           <div className="flex flex-col">
             <Card
-              placeholder="This Year Total"
+              placeholder="Objem tento rok"
               text={String(
                 parseInt(thisYearTotal) > 1000
                   ? `${(parseInt(thisYearTotal) / 1000).toFixed(2)} M`
@@ -152,7 +148,7 @@ const Dashboard: NextPage = () => {
               )}
             />
             <Card
-              placeholder="Celkem dílů tento rok"
+              placeholder="Celkem dílů vyrobeno"
               text={String(getPartsTotal(getFilteredOrders(0, 4)))}
             />
           </div>
