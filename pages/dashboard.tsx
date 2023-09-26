@@ -52,7 +52,7 @@ const Dashboard: NextPage = () => {
   };
 
   interface MoneyOnCustomer {
-    customer?: number;
+    customer: number;
   }
 
   const getMoneyOnCustomer = () => {
