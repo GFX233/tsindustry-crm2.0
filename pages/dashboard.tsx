@@ -12,6 +12,8 @@ const Dashboard: NextPage = () => {
   const data = useContext(DataContext);
   const [date, setDate] = useState(new Date().toISOString().substring(0, 7));
 
+  console.log(data)
+
   const getFilteredOrders = (from: number, to: number) => {
     const orders = data.orders.filter(
       (order) =>
